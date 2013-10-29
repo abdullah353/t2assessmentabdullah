@@ -49,29 +49,6 @@ ResultView = (function(_super) {
       Utils.midAlert("Save error");
       return this.$el.find('.save_status').html("Results may not have saved");
     }
-    function update() {
-  $.ajax({
-    type: 'GET',
-    dataType: 'jsonp',
-    url: 'http://tangerine.iriscouch.com/tangerine',
-    timeout: 4000,
-    success: function(data, textStatus ){
-        $.couch.replicate(Tangerine.config.address.local.dbName, Tangerine.config.address.cloud.host + "/" + Tangerine.config.address.cloud.dbName, {
-            success: function() {
-              return true;
-            },
-            error: function(a, b) {
-              return false;
-            }
-        });
-    },
-    error: function(xhr, textStatus, errorThrown){
-      return false;
-    }
-  });
-}
-setTimeout(function(){update()},2000);
-
   };
 
   ResultView.prototype.initialize = function(options) {

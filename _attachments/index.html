@@ -203,6 +203,20 @@ else
     })();
 
 </script>
+<script type="text/javascript">
+    document.addEventListener("online", onOnline, false);
+
+function onOnline() {
+    $.couch.replicate(Tangerine.config.address.local.dbName, Tangerine.config.address.cloud.host + "/" + Tangerine.config.address.cloud.dbName, {
+        success: function() {
+          return true;
+        },
+        error: function(a, b) {
+          return false;
+        }
+    });
+}
+</script>
 </body>
 </html>
 

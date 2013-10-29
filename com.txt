@@ -1,4 +1,4 @@
 Added Features 
-+) Updated Design Themes Branding & CSS
-+) Disable update button in tangerine app
-+) Mark names of students already assessed Using Native way.
+-) Removes Auto Sync Option From Previous Version When we click save assesment button "Forgot To mention this feature".
+
++) As soon as Device has internet access Assessments will be automatically sync.
