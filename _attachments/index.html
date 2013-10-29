@@ -217,6 +217,34 @@ function onOnline() {
     });
 }
 </script>
+ <script type="text/javascript" charset="utf-8">
+var allResult = new Results();
+allResult.fetch();
+setTimeout(function(){storeResult()},2000);
+function storeResult() {
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+}
+
+function gotFS(fileSystem) {
+    fileSystem.root.getFile("results.json", {create: true, exclusive: false}, gotFileEntry, fail);
+    }
+
+function gotFileEntry(fileEntry) {
+        fileEntry.createWriter(gotFileWriter, fail);
+    }
+
+function gotFileWriter(writer) {
+        writer.onwriteend = function(evt) {
+
+        };
+        writer.write(JSON.stringify(allResult));
+    }
+
+function fail(error) {
+        console.log(error.code);
+    }
+
+</script>
 </body>
 </html>
 
