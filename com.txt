@@ -1,4 +1,2 @@
 Added Features 
--) Removes Auto Sync Option From Previous Version When we click save assesment button "Forgot To mention this feature".
-
-+) As soon as Device has internet access Assessments will be automatically sync.
++) Result will be store when apllication start in results.json file
