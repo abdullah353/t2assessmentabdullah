@@ -611,8 +611,7 @@ progress {
  */
 #navigation {
   min-height: 50px;
-  background-color: #bcd63f;
-  background-position: 5px 6px;
+  background: url(../images/logo.png) no-repeat center #bcd63f;
   display: none;
   padding: 5px 5px 5px 5px;
   font-size: 20px;
@@ -681,6 +680,7 @@ button {
   margin: 10px 0px;
 }
 #version {
+  display: none;
   float: right;
   font-size: 50%;
   padding-right: 20px;
