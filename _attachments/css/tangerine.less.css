@@ -1141,8 +1141,9 @@ label[title] {
   background-color: #bcd63f;
 }
 .login_view #login_logo {
-  width: 300px;
-  height: 283px;
+  margin-left: -30px;
+  margin-top: 20%;
+  margin-bottom: 30px;
 }
 .messages div {
   display: block;
@@ -1782,4 +1783,7 @@ button.ui-button::-moz-focus-inner {
   width: 300px;
   margin-top: -40px;
   margin-right: 40px;
+}
+.compAssessName {
+  color: red;
 }
