@@ -12,7 +12,9 @@ LocationRunView = (function(_super) {
   }
 
   LocationRunView.prototype.events = {
-    "click .school_list li": "autofill",
+    "click .school_list li.cont": "autofill",
+    "click .school_list li.licomp": "licomp",
+    "click .school_list li.lipend": "lipend",
     "keyup input.search": "showOptions",
     "click .clear": "clearInputs"
   };
@@ -91,7 +93,7 @@ LocationRunView = (function(_super) {
         console.log(this.haystack);
       }
     }
-    template = "<li data-index='{{i}}'>";
+    template = "<li class='cont' data-index='{{i}}'>";
     _ref2 = this.levels;
     for (i = _k = 0, _len2 = _ref2.length; _k < _len2; i = ++_k) {
       level = _ref2[i];
@@ -200,7 +202,7 @@ LocationRunView = (function(_super) {
         a = [];
         a.push(location);
         if (_.isEqual(a, completename)) {
-          return abc = abc.replace("<li", "<li style='color:green;'");
+          return abc = abc.replace("<li class='cont'", "<li class='licomp' style='color:green;'");
         }
       });
       _.each(this.penNam, function(pendingname) {
@@ -208,7 +210,7 @@ LocationRunView = (function(_super) {
         a = [];
         a.push(location);
         if (_.isEqual(a, pendingname)) {
-          return abc = abc.replace("<li", "<li style='color:red;'");
+          return abc = abc.replace("<li class='cont'", "<li class='lipend' style='color:red;'");
         }
       });
       console.log(abc);
@@ -340,6 +342,19 @@ LocationRunView = (function(_super) {
       missing: counts['missing'],
       total: counts['total']
     };
+  };
+
+  LocationRunView.prototype.licomp = function(e) {
+    console.log(e);
+    return console.log("Completed student clicked");
+  };
+
+  LocationRunView.prototype.lipend = function(e) {
+    if (confirm("Resume This Assessment")) {
+      return console.log("resumed called");
+    } else {
+      return console.log("Canceled triggered");
+    }
   };
 
   return LocationRunView;

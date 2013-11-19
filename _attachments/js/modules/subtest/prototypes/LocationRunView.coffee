@@ -1,7 +1,9 @@
 class LocationRunView extends Backbone.View
 
   events:
-    "click .school_list li" : "autofill"
+    "click .school_list li.cont" : "autofill"
+    "click .school_list li.licomp" : "licomp"
+    "click .school_list li.lipend" : "lipend"
     "keyup input.search"  : "showOptions"
     "click .clear" : "clearInputs"
 
@@ -62,7 +64,7 @@ class LocationRunView extends Backbone.View
         console.log "@haystack result is"
         console.log @haystack
     
-    template = "<li data-index='{{i}}'>"
+    template = "<li class='cont' data-index='{{i}}'>"
     for level, i in @levels
       template += "{{level_#{i}}}"
       template += " - " unless i == @levels.length-1
@@ -128,12 +130,12 @@ class LocationRunView extends Backbone.View
         #important to keep type of same to comparison
         a = []
         a.push location
-        abc = abc.replace "<li","<li style='color:green;'" if _.isEqual a, completename
+        abc = abc.replace "<li class='cont'","<li class='licomp' style='color:green;'" if _.isEqual a, completename
       _.each @penNam, (pendingname) ->
         #important to keep type of same to comparison
         a = []
         a.push location
-        abc = abc.replace "<li","<li style='color:red;'" if _.isEqual a, pendingname
+        abc = abc.replace "<li class='cont'","<li class='lipend' style='color:red;'" if _.isEqual a, pendingname
       console.log abc
     return abc
 
@@ -207,3 +209,15 @@ class LocationRunView extends Backbone.View
       missing   : counts['missing']
       total     : counts['total']
     }
+
+  licomp: (e) ->
+    if confirm("Assessment is already Completed. Do you want to restart this Assessment?")
+      
+    else
+      @clearInputs
+
+  lipend: (e) ->
+    if confirm("Resume This Assessment")
+      console.log "resumed called"
+    else
+      console.log "Canceled triggered"
