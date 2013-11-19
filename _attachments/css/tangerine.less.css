@@ -611,8 +611,7 @@ progress {
  */
 #navigation {
   min-height: 50px;
-  background-color: #bcd63f;
-  background-position: 5px 6px;
+  background: url(../images/logo.png) no-repeat center #bcd63f;
   display: none;
   padding: 5px 5px 5px 5px;
   font-size: 20px;
@@ -681,6 +680,7 @@ button {
   margin: 10px 0px;
 }
 #version {
+  display: none;
   float: right;
   font-size: 50%;
   padding-right: 20px;
@@ -1141,8 +1141,9 @@ label[title] {
   background-color: #bcd63f;
 }
 .login_view #login_logo {
-  width: 300px;
-  height: 283px;
+  margin-left: -30px;
+  margin-top: 20%;
+  margin-bottom: 30px;
 }
 .messages div {
   display: block;
@@ -1782,4 +1783,7 @@ button.ui-button::-moz-focus-inner {
   width: 300px;
   margin-top: -40px;
   margin-right: 40px;
+}
+.compAssessName {
+  color: red;
 }
