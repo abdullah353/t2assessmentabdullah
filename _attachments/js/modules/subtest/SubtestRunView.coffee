@@ -11,7 +11,12 @@ class SubtestRunView extends Backbone.View
     @protoViews  = Tangerine.config.prototypeViews
     @model       = options.model
     @parent      = options.parent
-
+    console.log "#db options argument recieved by SubtestRunView"
+    console.log options
+    console.log "#db options.model for SubtestRunView"
+    console.log options.model
+    console.log "#db options.parent for SubtestRunView"
+    console.log options.parent
     @prototypeRendered = false
 
   render: ->
