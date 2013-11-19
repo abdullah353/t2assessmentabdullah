@@ -6,8 +6,6 @@ class LocationRunView extends Backbone.View
     "click .clear" : "clearInputs"
 
   initialize: (options) ->
-    console.log "Options in initialize"
-    console.log @samAssessmentId
     @pendResAr = []
     @compResAr = []
     @emptyResult=[]
@@ -19,35 +17,24 @@ class LocationRunView extends Backbone.View
       "_id" : @samAssessmentId
       success: (gotresult) =>
         _.each gotresult.models , (result3) =>
-          console.log result3
           if _.last(result3.attributes.subtestData)?.data.end_time? 
             @compResAr.push result3.attributes.subtestData
           else 
             @pendResAr.push(result3.attributes.subtestData)
             @emptyResult.push _(result3).pluck("_id") if result3.attributes.subtestData.length == 1
-
-        console.log "Pending Results Array"
-        console.log @pendResAr
         _.each @pendResAr , (items) =>
           _.each items , (item) =>
             if item?.prototype? and item.prototype == "location" and item.data?.location?
               @penNam.push item.data.location
-
-        console.log "Completed Reuslt"
-        console.log @compResAr
         _.each @compResAr , (items) =>
           _.each items , (item) =>
             if item?.prototype? and item.prototype == "location" and item.data?.location?
               @compNam.push item.data.location
-              console.log @compNam
-
     @model  = @options.model
     @parent = @options.parent
     
     @levels = @model.get("levels")       || []
     @locations = @model.get("locations") || []
-    console.log "Locations are"
-    console.log @locations
     if @levels.length == 1 && @levels[0] == ""
       @levels = []
     if @locations.length == 1 && @locations[0] == ""
@@ -59,9 +46,6 @@ class LocationRunView extends Backbone.View
       @haystack[i] = []
       for locationData in location
         @haystack[i].push locationData.toLowerCase()
-        console.log "@haystack result is"
-        console.log @haystack
-    
     template = "<li data-index='{{i}}'>"
     for level, i in @levels
       template += "{{level_#{i}}}"
@@ -84,8 +68,6 @@ class LocationRunView extends Backbone.View
 
   showOptions: (event) ->
     needle = $(event.target).val().toLowerCase()
-    console.log "needle is"
-    console.log needle
     if needle == ''
       $('.autofill').hide()
     else
@@ -134,7 +116,6 @@ class LocationRunView extends Backbone.View
         a = []
         a.push location
         abc = abc.replace "<li","<li style='color:red;'" if _.isEqual a, pendingname
-      console.log abc
     return abc
 
   render: ->

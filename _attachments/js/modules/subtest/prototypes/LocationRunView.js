@@ -20,8 +20,6 @@ LocationRunView = (function(_super) {
   LocationRunView.prototype.initialize = function(options) {
     var i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
       _this = this;
-    console.log("Options in initialize");
-    console.log(this.samAssessmentId);
     this.pendResAr = [];
     this.compResAr = [];
     this.emptyResult = [];
@@ -34,7 +32,6 @@ LocationRunView = (function(_super) {
       success: function(gotresult) {
         _.each(gotresult.models, function(result3) {
           var _ref1;
-          console.log(result3);
           if (((_ref1 = _.last(result3.attributes.subtestData)) != null ? _ref1.data.end_time : void 0) != null) {
             return _this.compResAr.push(result3.attributes.subtestData);
           } else {
@@ -44,8 +41,6 @@ LocationRunView = (function(_super) {
             }
           }
         });
-        console.log("Pending Results Array");
-        console.log(_this.pendResAr);
         _.each(_this.pendResAr, function(items) {
           return _.each(items, function(item) {
             var _ref1;
@@ -54,14 +49,11 @@ LocationRunView = (function(_super) {
             }
           });
         });
-        console.log("Completed Reuslt");
-        console.log(_this.compResAr);
         return _.each(_this.compResAr, function(items) {
           return _.each(items, function(item) {
             var _ref1;
             if (((item != null ? item.prototype : void 0) != null) && item.prototype === "location" && (((_ref1 = item.data) != null ? _ref1.location : void 0) != null)) {
-              _this.compNam.push(item.data.location);
-              return console.log(_this.compNam);
+              return _this.compNam.push(item.data.location);
             }
           });
         });
@@ -71,8 +63,6 @@ LocationRunView = (function(_super) {
     this.parent = this.options.parent;
     this.levels = this.model.get("levels") || [];
     this.locations = this.model.get("locations") || [];
-    console.log("Locations are");
-    console.log(this.locations);
     if (this.levels.length === 1 && this.levels[0] === "") {
       this.levels = [];
     }
@@ -87,8 +77,6 @@ LocationRunView = (function(_super) {
       for (_j = 0, _len1 = location.length; _j < _len1; _j++) {
         locationData = location[_j];
         this.haystack[i].push(locationData.toLowerCase());
-        console.log("@haystack result is");
-        console.log(this.haystack);
       }
     }
     template = "<li data-index='{{i}}'>";
@@ -132,8 +120,6 @@ LocationRunView = (function(_super) {
   LocationRunView.prototype.showOptions = function(event) {
     var atLeastOne, field, html, i, isThere, j, needle, otherField, result, results, stack, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref1, _ref2, _ref3;
     needle = $(event.target).val().toLowerCase();
-    console.log("needle is");
-    console.log(needle);
     if (needle === '') {
       return $('.autofill').hide();
     } else {
@@ -211,7 +197,6 @@ LocationRunView = (function(_super) {
           return abc = abc.replace("<li", "<li style='color:red;'");
         }
       });
-      console.log(abc);
     }
     return abc;
   };

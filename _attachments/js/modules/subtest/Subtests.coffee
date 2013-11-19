@@ -9,12 +9,8 @@ class Subtests extends Backbone.Collection
     subtest.get "order"
   
   initialize: (options) ->
-    console.log "I am Subtests Collection initialize"
+
   fetch: (options) ->
-    console.log "#db Below if the arguments of Fetch Subtests Collection"
-    console.log options
-    console.log "#db what is super in Collection Subtests"
-    console.log super
     super options
 
   # call this after you load the collection you're going to be working with

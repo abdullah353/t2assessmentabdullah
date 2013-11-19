@@ -30,15 +30,9 @@ ResultSumView = (function(_super) {
 
   ResultSumView.prototype.initialize = function(options) {
     var prototype, subtest, _i, _len, _ref1, _ref2, _results;
-    console.log("I am in ResultSumView initialize Below is options arguments");
-    console.log(options);
     this.result = options.model;
-    console.log("finished Check");
-    console.log(options.finishCheck);
     this.finishCheck = options.finishCheck;
     this.finished = ((_ref1 = _.last(this.result.attributes.subtestData)) != null ? _ref1.data.end_time : void 0) != null ? true : false;
-    console.log("Finsed Out put");
-    console.log(this.finished);
     this.studentId = "";
     _ref2 = this.result.attributes.subtestData;
     _results = [];
