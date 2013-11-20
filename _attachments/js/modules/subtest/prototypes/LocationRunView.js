@@ -16,9 +16,7 @@ LocationRunView = (function(_super) {
     "click .school_list li.licomp": "licomp",
     "click .school_list li.lipend": "lipend",
     "keyup input.search": "showOptions",
-    "click .clear": "clearInputs",
-    "click .resume-btn": "resumethis",
-    "click .restart-btn": "restartthis"
+    "click .clear": "clearInputs"
   };
 
   LocationRunView.prototype.initialize = function(options) {
@@ -107,7 +105,9 @@ LocationRunView = (function(_super) {
     template += "</li>";
     this.li = _.template(template);
     control = '<button class="restart-btn navigation">Restart</button>';
-    return this.btnreset = _.template(control);
+    this.btnreset = _.template(control);
+    control = '<button class="resume-btn navigation">Resume</button>';
+    return this.btnresume = _.template(control);
   };
 
   LocationRunView.prototype.clearInputs = function() {
@@ -123,6 +123,7 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.autofill = function(event) {
     var i, index, level, location, _i, _len, _ref1, _results;
+    this.clearButton;
     this.$el.find(".autofill").fadeOut(250);
     index = $(event.target).attr("data-index");
     location = this.locations[index];
@@ -349,11 +350,11 @@ LocationRunView = (function(_super) {
   };
 
   LocationRunView.prototype.licomp = function(e) {
-    this.clearInputs;
+    this.clearButton;
     $("button.next").hide();
     $('div.controlls').append(this.btnreset);
     return $("button.restart-btn").click(function() {
-      if (confirm("Are You Sure You Want To Restart This Assessment")) {
+      if (confirm("Are You Sure You Want To Restart This Assessment.")) {
         return $("button.next").trigger("click");
       }
     });
@@ -361,12 +362,10 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.lipend = function(e) {};
 
-  LocationRunView.prototype.restartthis = function(e) {
-    return console.log("Restart This Assessment");
-  };
-
-  LocationRunView.prototype.resumethis = function(e) {
-    return console.log("Resume This Assessment");
+  LocationRunView.prototype.clearButton = function() {
+    $('button.restart-btn').remove();
+    $('button.resume-btn').remove();
+    return $('button.next').show();
   };
 
   return LocationRunView;
