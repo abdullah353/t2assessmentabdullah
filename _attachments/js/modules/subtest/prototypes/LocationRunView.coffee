@@ -1,11 +1,13 @@
 class LocationRunView extends Backbone.View
 
   events:
-    "click .school_list li.cont" : "autofill"
+    "click .school_list li" : "autofill"
     "click .school_list li.licomp" : "licomp"
     "click .school_list li.lipend" : "lipend"
     "keyup input.search"  : "showOptions"
     "click .clear" : "clearInputs"
+    "click .resume-btn" : "resumethis"
+    "click .restart-btn" : "restartthis"
 
   initialize: (options) ->
     console.log "Options in initialize"
@@ -71,7 +73,8 @@ class LocationRunView extends Backbone.View
     template += "</li>"
     
     @li = _.template(template)
-
+    control = '<button class="restart-btn navigation">Restart</button>'
+    @btnreset = _.template(control)
   clearInputs: ->
     for level, i in @levels
       @$el.find("#level_#{i}").val("")
@@ -211,13 +214,15 @@ class LocationRunView extends Backbone.View
     }
 
   licomp: (e) ->
-    if confirm("Assessment is already Completed. Do you want to restart this Assessment?")
-      
-    else
-      @clearInputs
-
+    @clearInputs
+    $("button.next").hide()
+    $('div.controlls').append @btnreset
+    $("button.restart-btn").click () ->
+      if confirm("Are You Sure You Want To Restart This Assessment")
+        $("button.next").trigger( "click" );
   lipend: (e) ->
-    if confirm("Resume This Assessment")
-      console.log "resumed called"
-    else
-      console.log "Canceled triggered"
+    
+  restartthis: (e) ->
+    console.log "Restart This Assessment"
+  resumethis: (e) ->
+    console.log "Resume This Assessment"

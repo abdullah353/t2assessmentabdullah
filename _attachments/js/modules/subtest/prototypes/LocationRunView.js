@@ -12,15 +12,17 @@ LocationRunView = (function(_super) {
   }
 
   LocationRunView.prototype.events = {
-    "click .school_list li.cont": "autofill",
+    "click .school_list li": "autofill",
     "click .school_list li.licomp": "licomp",
     "click .school_list li.lipend": "lipend",
     "keyup input.search": "showOptions",
-    "click .clear": "clearInputs"
+    "click .clear": "clearInputs",
+    "click .resume-btn": "resumethis",
+    "click .restart-btn": "restartthis"
   };
 
   LocationRunView.prototype.initialize = function(options) {
-    var i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
+    var control, i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
       _this = this;
     console.log("Options in initialize");
     console.log(this.samAssessmentId);
@@ -103,7 +105,9 @@ LocationRunView = (function(_super) {
       }
     }
     template += "</li>";
-    return this.li = _.template(template);
+    this.li = _.template(template);
+    control = '<button class="restart-btn navigation">Restart</button>';
+    return this.btnreset = _.template(control);
   };
 
   LocationRunView.prototype.clearInputs = function() {
@@ -345,16 +349,24 @@ LocationRunView = (function(_super) {
   };
 
   LocationRunView.prototype.licomp = function(e) {
-    console.log(e);
-    return console.log("Completed student clicked");
+    this.clearInputs;
+    $("button.next").hide();
+    $('div.controlls').append(this.btnreset);
+    return $("button.restart-btn").click(function() {
+      if (confirm("Are You Sure You Want To Restart This Assessment")) {
+        return $("button.next").trigger("click");
+      }
+    });
   };
 
-  LocationRunView.prototype.lipend = function(e) {
-    if (confirm("Resume This Assessment")) {
-      return console.log("resumed called");
-    } else {
-      return console.log("Canceled triggered");
-    }
+  LocationRunView.prototype.lipend = function(e) {};
+
+  LocationRunView.prototype.restartthis = function(e) {
+    return console.log("Restart This Assessment");
+  };
+
+  LocationRunView.prototype.resumethis = function(e) {
+    return console.log("Resume This Assessment");
   };
 
   return LocationRunView;
