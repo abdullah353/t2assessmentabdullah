@@ -2,9 +2,11 @@ class LocationRunView extends Backbone.View
 
   events:
     "click .school_list li" : "autofill"
+    "click .school_list li.licomp" : "licomp"
+    "click .school_list li.lipend" : "lipend"
     "keyup input.search"  : "showOptions"
     "click .clear" : "clearInputs"
-
+    
   initialize: (options) ->
     console.log "Options in initialize"
     console.log @samAssessmentId
@@ -62,19 +64,23 @@ class LocationRunView extends Backbone.View
         console.log "@haystack result is"
         console.log @haystack
     
-    template = "<li data-index='{{i}}'>"
+    template = "<li class='cont' data-index='{{i}}'>"
     for level, i in @levels
       template += "{{level_#{i}}}"
       template += " - " unless i == @levels.length-1
     template += "</li>"
     
     @li = _.template(template)
-
+    control = '<button class="restart-btn navigation">Restart</button>'
+    @btnreset = _.template(control)
+    control = '<button class="resume-btn navigation">Resume</button>'
+    @btnresume = _.template(control)
   clearInputs: ->
     for level, i in @levels
       @$el.find("#level_#{i}").val("")
 
   autofill: (event) ->
+    @clearButton
     @$el.find(".autofill").fadeOut(250)
     index = $(event.target).attr("data-index")
     location = @locations[index]
@@ -128,12 +134,12 @@ class LocationRunView extends Backbone.View
         #important to keep type of same to comparison
         a = []
         a.push location
-        abc = abc.replace "<li","<li style='color:green;'" if _.isEqual a, completename
+        abc = abc.replace "<li class='cont'","<li class='licomp' style='color:green;'" if _.isEqual a, completename
       _.each @penNam, (pendingname) ->
         #important to keep type of same to comparison
         a = []
         a.push location
-        abc = abc.replace "<li","<li style='color:red;'" if _.isEqual a, pendingname
+        abc = abc.replace "<li class='cont'","<li class='lipend' style='color:red;'" if _.isEqual a, pendingname
       console.log abc
     return abc
 
@@ -207,3 +213,18 @@ class LocationRunView extends Backbone.View
       missing   : counts['missing']
       total     : counts['total']
     }
+
+  licomp: (e) ->
+    @clearButton
+    $("button.next").hide()
+    $('div.controlls').append @btnreset
+    $("button.restart-btn").click () ->
+      if confirm "Are You Sure You Want To Restart This Assessment."
+        $("button.next").trigger "click" 
+
+  lipend: (e) ->
+
+  clearButton: () ->
+    $('button.restart-btn').remove()
+    $('button.resume-btn').remove()
+    $('button.next').show()

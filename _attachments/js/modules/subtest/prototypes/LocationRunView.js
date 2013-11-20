@@ -13,12 +13,14 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.events = {
     "click .school_list li": "autofill",
+    "click .school_list li.licomp": "licomp",
+    "click .school_list li.lipend": "lipend",
     "keyup input.search": "showOptions",
     "click .clear": "clearInputs"
   };
 
   LocationRunView.prototype.initialize = function(options) {
-    var i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
+    var control, i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
       _this = this;
     console.log("Options in initialize");
     console.log(this.samAssessmentId);
@@ -91,7 +93,7 @@ LocationRunView = (function(_super) {
         console.log(this.haystack);
       }
     }
-    template = "<li data-index='{{i}}'>";
+    template = "<li class='cont' data-index='{{i}}'>";
     _ref2 = this.levels;
     for (i = _k = 0, _len2 = _ref2.length; _k < _len2; i = ++_k) {
       level = _ref2[i];
@@ -101,7 +103,11 @@ LocationRunView = (function(_super) {
       }
     }
     template += "</li>";
-    return this.li = _.template(template);
+    this.li = _.template(template);
+    control = '<button class="restart-btn navigation">Restart</button>';
+    this.btnreset = _.template(control);
+    control = '<button class="resume-btn navigation">Resume</button>';
+    return this.btnresume = _.template(control);
   };
 
   LocationRunView.prototype.clearInputs = function() {
@@ -117,6 +123,7 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.autofill = function(event) {
     var i, index, level, location, _i, _len, _ref1, _results;
+    this.clearButton;
     this.$el.find(".autofill").fadeOut(250);
     index = $(event.target).attr("data-index");
     location = this.locations[index];
@@ -200,7 +207,7 @@ LocationRunView = (function(_super) {
         a = [];
         a.push(location);
         if (_.isEqual(a, completename)) {
-          return abc = abc.replace("<li", "<li style='color:green;'");
+          return abc = abc.replace("<li class='cont'", "<li class='licomp' style='color:green;'");
         }
       });
       _.each(this.penNam, function(pendingname) {
@@ -208,7 +215,7 @@ LocationRunView = (function(_super) {
         a = [];
         a.push(location);
         if (_.isEqual(a, pendingname)) {
-          return abc = abc.replace("<li", "<li style='color:red;'");
+          return abc = abc.replace("<li class='cont'", "<li class='lipend' style='color:red;'");
         }
       });
       console.log(abc);
@@ -340,6 +347,25 @@ LocationRunView = (function(_super) {
       missing: counts['missing'],
       total: counts['total']
     };
+  };
+
+  LocationRunView.prototype.licomp = function(e) {
+    this.clearButton;
+    $("button.next").hide();
+    $('div.controlls').append(this.btnreset);
+    return $("button.restart-btn").click(function() {
+      if (confirm("Are You Sure You Want To Restart This Assessment.")) {
+        return $("button.next").trigger("click");
+      }
+    });
+  };
+
+  LocationRunView.prototype.lipend = function(e) {};
+
+  LocationRunView.prototype.clearButton = function() {
+    $('button.restart-btn').remove();
+    $('button.resume-btn').remove();
+    return $('button.next').show();
   };
 
   return LocationRunView;
