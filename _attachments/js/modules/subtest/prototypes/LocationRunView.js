@@ -20,7 +20,7 @@ LocationRunView = (function(_super) {
   };
 
   LocationRunView.prototype.initialize = function(options) {
-    var control, i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
+    var control, control1, i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
       _this = this;
     console.log("Options in initialize");
     console.log(this.samAssessmentId);
@@ -106,8 +106,8 @@ LocationRunView = (function(_super) {
     this.li = _.template(template);
     control = '<button class="restart-btn navigation">Restart</button>';
     this.btnreset = _.template(control);
-    control = '<button class="resume-btn navigation">Resume</button>';
-    return this.btnresume = _.template(control);
+    control1 = '<button class="resume-btn navigation">Resume</button>';
+    return this.btnresume = _.template(control1);
   };
 
   LocationRunView.prototype.clearInputs = function() {
@@ -123,7 +123,7 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.autofill = function(event) {
     var i, index, level, location, _i, _len, _ref1, _results;
-    this.clearButton;
+    this.clearButton();
     this.$el.find(".autofill").fadeOut(250);
     index = $(event.target).attr("data-index");
     location = this.locations[index];
@@ -350,21 +350,34 @@ LocationRunView = (function(_super) {
   };
 
   LocationRunView.prototype.licomp = function(e) {
-    this.clearButton;
     $("button.next").hide();
-    $('div.controlls').append(this.btnreset);
-    return $("button.restart-btn").click(function() {
+    if ($("button.restart-btn").length === 0) {
+      $('div.controlls').append(this.btnreset);
+    } else {
+      $("button.restart-btn").show();
+    }
+    return $("button.restart-btn").unbind("click").click(function() {
       if (confirm("Are You Sure You Want To Restart This Assessment.")) {
         return $("button.next").trigger("click");
       }
     });
   };
 
-  LocationRunView.prototype.lipend = function(e) {};
+  LocationRunView.prototype.lipend = function(e) {
+    this.licomp();
+    if ($("button.resume-btn").length === 0) {
+      $('div.controlls').append(this.btnresume);
+    } else {
+      $("button.resume-btn").show();
+    }
+    return $("button.resume-btn").unbind("click").click(function() {
+      return console.log("Resume This Assessment");
+    });
+  };
 
   LocationRunView.prototype.clearButton = function() {
-    $('button.restart-btn').remove();
-    $('button.resume-btn').remove();
+    $('button.restart-btn').hide();
+    $('button.resume-btn').hide();
     return $('button.next').show();
   };
 

@@ -73,14 +73,14 @@ class LocationRunView extends Backbone.View
     @li = _.template(template)
     control = '<button class="restart-btn navigation">Restart</button>'
     @btnreset = _.template(control)
-    control = '<button class="resume-btn navigation">Resume</button>'
-    @btnresume = _.template(control)
+    control1 = '<button class="resume-btn navigation">Resume</button>'
+    @btnresume = _.template(control1)
   clearInputs: ->
     for level, i in @levels
       @$el.find("#level_#{i}").val("")
 
   autofill: (event) ->
-    @clearButton
+    @clearButton()
     @$el.find(".autofill").fadeOut(250)
     index = $(event.target).attr("data-index")
     location = @locations[index]
@@ -215,16 +215,25 @@ class LocationRunView extends Backbone.View
     }
 
   licomp: (e) ->
-    @clearButton
     $("button.next").hide()
-    $('div.controlls').append @btnreset
-    $("button.restart-btn").click () ->
+    if $("button.restart-btn").length == 0
+      $('div.controlls').append @btnreset
+    else
+      $("button.restart-btn").show()
+    $("button.restart-btn").unbind("click").click () ->
       if confirm "Are You Sure You Want To Restart This Assessment."
         $("button.next").trigger "click" 
 
   lipend: (e) ->
-
+    @licomp()
+    if $("button.resume-btn").length == 0
+      $('div.controlls').append @btnresume
+    else
+      $("button.resume-btn").show()
+    $("button.resume-btn").unbind("click").click () ->
+      console.log "Resume This Assessment"
+  
   clearButton: () ->
-    $('button.restart-btn').remove()
-    $('button.resume-btn').remove()
+    $('button.restart-btn').hide()
+    $('button.resume-btn').hide()
     $('button.next').show()
