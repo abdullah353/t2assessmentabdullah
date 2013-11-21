@@ -12,8 +12,8 @@ class LocationRunView extends Backbone.View
     console.log @samAssessmentId
     @pendResAr = []
     @compResAr = []
-    @emptyResult=[]
     @penNam =[]
+    @penkeys=[]
     @compNam = []
     @samAssessmentId = options.parent.model.attributes.assessmentId
     @resultarray = new Results
@@ -26,8 +26,18 @@ class LocationRunView extends Backbone.View
             @compResAr.push result3.attributes.subtestData
           else 
             @pendResAr.push(result3.attributes.subtestData)
-            @emptyResult.push _(result3).pluck("_id") if result3.attributes.subtestData.length == 1
+            console.log "@penkeys.length length is below"
+            console.log @penkeys.length
+            @penkeys.push result3.id if @penkeys.length == 0
+            alreadyExist = off
+            _.each @penkeys , (penkey) =>
+              if penkey != result3.id
+                console.log "Already Exist"
+                alreadyExist = on
+            @penkeys.push result3.id if alreadyExist
 
+        console.log "result id arrays"
+        console.log @penkeys
         console.log "Pending Results Array"
         console.log @pendResAr
         _.each @pendResAr , (items) =>
@@ -135,11 +145,12 @@ class LocationRunView extends Backbone.View
         a = []
         a.push location
         abc = abc.replace "<li class='cont'","<li class='licomp' style='color:green;'" if _.isEqual a, completename
-      _.each @penNam, (pendingname) ->
+      _.each @penNam, (pendingname , i) =>
+        console.log @penkeys[i]
         #important to keep type of same to comparison
         a = []
         a.push location
-        abc = abc.replace "<li class='cont'","<li class='lipend' style='color:red;'" if _.isEqual a, pendingname
+        abc = abc.replace "<li class='cont'","<li class='lipend' style='color:red;' data-key='#{@penkeys[i]}' " if _.isEqual a, pendingname
       console.log abc
     return abc
 
@@ -230,8 +241,8 @@ class LocationRunView extends Backbone.View
       $('div.controlls').append @btnresume
     else
       $("button.resume-btn").show()
-    $("button.resume-btn").unbind("click").click () ->
-      console.log "Resume This Assessment"
+    $("button.resume-btn").unbind("click").click () =>
+      console.log "Resume This Assessment #{@samAssessmentId}"
   
   clearButton: () ->
     $('button.restart-btn').hide()

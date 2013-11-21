@@ -26,8 +26,8 @@ LocationRunView = (function(_super) {
     console.log(this.samAssessmentId);
     this.pendResAr = [];
     this.compResAr = [];
-    this.emptyResult = [];
     this.penNam = [];
+    this.penkeys = [];
     this.compNam = [];
     this.samAssessmentId = options.parent.model.attributes.assessmentId;
     this.resultarray = new Results;
@@ -35,17 +35,31 @@ LocationRunView = (function(_super) {
       "_id": this.samAssessmentId,
       success: function(gotresult) {
         _.each(gotresult.models, function(result3) {
-          var _ref1;
+          var alreadyExist, _ref1;
           console.log(result3);
           if (((_ref1 = _.last(result3.attributes.subtestData)) != null ? _ref1.data.end_time : void 0) != null) {
             return _this.compResAr.push(result3.attributes.subtestData);
           } else {
             _this.pendResAr.push(result3.attributes.subtestData);
-            if (result3.attributes.subtestData.length === 1) {
-              return _this.emptyResult.push(_(result3).pluck("_id"));
+            console.log("@penkeys.length length is below");
+            console.log(_this.penkeys.length);
+            if (_this.penkeys.length === 0) {
+              _this.penkeys.push(result3.id);
+            }
+            alreadyExist = false;
+            _.each(_this.penkeys, function(penkey) {
+              if (penkey !== result3.id) {
+                console.log("Already Exist");
+                return alreadyExist = true;
+              }
+            });
+            if (alreadyExist) {
+              return _this.penkeys.push(result3.id);
             }
           }
         });
+        console.log("result id arrays");
+        console.log(_this.penkeys);
         console.log("Pending Results Array");
         console.log(_this.pendResAr);
         _.each(_this.pendResAr, function(items) {
@@ -193,7 +207,8 @@ LocationRunView = (function(_super) {
   };
 
   LocationRunView.prototype.getLocationLi = function(i) {
-    var abc, j, location, templateInfo, _i, _len, _ref1;
+    var abc, j, location, templateInfo, _i, _len, _ref1,
+      _this = this;
     templateInfo = {
       "i": i
     };
@@ -210,12 +225,13 @@ LocationRunView = (function(_super) {
           return abc = abc.replace("<li class='cont'", "<li class='licomp' style='color:green;'");
         }
       });
-      _.each(this.penNam, function(pendingname) {
+      _.each(this.penNam, function(pendingname, i) {
         var a;
+        console.log(_this.penkeys[i]);
         a = [];
         a.push(location);
         if (_.isEqual(a, pendingname)) {
-          return abc = abc.replace("<li class='cont'", "<li class='lipend' style='color:red;'");
+          return abc = abc.replace("<li class='cont'", "<li class='lipend' style='color:red;' data-key='" + _this.penkeys[i] + "' ");
         }
       });
       console.log(abc);
@@ -364,6 +380,7 @@ LocationRunView = (function(_super) {
   };
 
   LocationRunView.prototype.lipend = function(e) {
+    var _this = this;
     this.licomp();
     if ($("button.resume-btn").length === 0) {
       $('div.controlls').append(this.btnresume);
@@ -371,7 +388,7 @@ LocationRunView = (function(_super) {
       $("button.resume-btn").show();
     }
     return $("button.resume-btn").unbind("click").click(function() {
-      return console.log("Resume This Assessment");
+      return console.log("Resume This Assessment " + _this.samAssessmentId);
     });
   };
 
