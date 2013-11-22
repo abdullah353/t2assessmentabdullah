@@ -246,7 +246,7 @@ LocationRunView = (function(_super) {
     _ref1 = this.levels;
     for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
       level = _ref1[i];
-      html += "        <div class='label_value'>          <label for='level_" + i + "'>" + level + "</label><br>          <input class='search' val='' data-level='" + i + "' id='samSearchBox' placeholder='Search For Student Name'>          <labe>Selected Student Name: </label>          <input data-level='" + i + "' id='level_" + i + "' value='' disabled>        </div>        <div id='autofill_" + i + "' class='autofill' style='display:none'>          <h2>Select one from autofill list</h2>          <ul class='school_list' id='school_list_" + i + "'>          </ul>        </div>    ";
+      html += "        <div class='label_value'>          <label for='level_" + i + "'>" + level + "</label><br>          <input class='search' val='' data-level='" + i + "' id='samSearchBox' placeholder='Search For Student Name'>          <label>Selected Student Name: </label>          <input class='name-field' data-level='" + i + "' id='level_" + i + "' value='' disabled>        </div>        <div id='autofill_" + i + "' class='autofill' style='display:none'>          <h2>Select one from autofill list</h2>          <ul class='school_list' id='school_list_" + i + "'>          </ul>        </div>    ";
     }
     this.$el.html(html);
     return this.trigger("rendered");
@@ -379,8 +379,17 @@ LocationRunView = (function(_super) {
     });
   };
 
-  LocationRunView.prototype.lipend = function(e) {
-    var _this = this;
+  LocationRunView.prototype.lipend = function(event) {
+    var index, key, _ref1, _ref2, _ref3, _ref4,
+      _this = this;
+    if ((event != null ? (_ref1 = event.currentTarget) != null ? (_ref2 = _ref1.dataset) != null ? _ref2.key : void 0 : void 0 : void 0) != null) {
+      key = event.currentTarget.dataset.key;
+    }
+    if ((event != null ? (_ref3 = event.currentTarget) != null ? (_ref4 = _ref3.dataset) != null ? _ref4.index : void 0 : void 0 : void 0) != null) {
+      index = event.currentTarget.dataset.index;
+    }
+    console.log(this.samAssessmentId);
+    console.log("resume/" + this.samAssessmentId + "/" + key);
     this.licomp();
     if ($("button.resume-btn").length === 0) {
       $('div.controlls').append(this.btnresume);
@@ -388,7 +397,7 @@ LocationRunView = (function(_super) {
       $("button.resume-btn").show();
     }
     return $("button.resume-btn").unbind("click").click(function() {
-      return console.log("Resume This Assessment " + _this.samAssessmentId);
+      return Tangerine.router.navigate("resume/" + _this.samAssessmentId + "/" + key + "/" + index, true);
     });
   };
 

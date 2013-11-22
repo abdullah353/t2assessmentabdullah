@@ -37,7 +37,8 @@ class Router extends Backbone.Router
     'print/:id'       : 'print'
 
     'resume/:assessmentId/:resultId'    : 'resume'
-    
+    'resume/:assessmentId/:resultId/:skip'    : 'resume'
+
     'restart/:id'   : 'restart'
     'edit/:id'      : 'edit'
     'csv/:id'       : 'csv'
@@ -340,7 +341,8 @@ class Router extends Backbone.Router
       isUnregistered: (options) ->
         Tangerine.router.navigate "login", true
 
-  resume: (assessmentId, resultId) ->
+  resume: (assessmentId, resultId, skip) ->
+    console.log "Resuming"
     Tangerine.user.verify
       isRegistered: ->
         assessment = new Assessment
@@ -361,9 +363,17 @@ class Router extends Backbone.Router
                   assessmentView : view
                 view.index = result.get("subtestData").length
                 vm.show view
+                
+                console.log "length of subtestid is #{result.get('subtestData').length}"
+                if skip? and result.get("subtestData").length == 1
+                  console.log "Do auto by pass"
+                  $('input.search').val("a")
+                  $('input.search').trigger("keyup")
+                  $('*[data-index= 2 ]').trigger("click")
+                  $('button.next').trigger("click")
+                
       isUnregistered: (options) ->
         Tangerine.router.navigate "login", true
-
 
   results: (assessmentId) ->
     Tangerine.user.verify

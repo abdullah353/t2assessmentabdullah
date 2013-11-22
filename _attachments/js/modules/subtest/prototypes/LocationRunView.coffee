@@ -166,8 +166,8 @@ class LocationRunView extends Backbone.View
         <div class='label_value'>
           <label for='level_#{i}'>#{level}</label><br>
           <input class='search' val='' data-level='#{i}' id='samSearchBox' placeholder='Search For Student Name'>
-          <labe>Selected Student Name: </label>
-          <input data-level='#{i}' id='level_#{i}' value='' disabled>
+          <label>Selected Student Name: </label>
+          <input class='name-field' data-level='#{i}' id='level_#{i}' value='' disabled>
         </div>
         <div id='autofill_#{i}' class='autofill' style='display:none'>
           <h2>Select one from autofill list</h2>
@@ -235,15 +235,19 @@ class LocationRunView extends Backbone.View
       if confirm "Are You Sure You Want To Restart This Assessment."
         $("button.next").trigger "click" 
 
-  lipend: (e) ->
+  lipend: (event) ->
+    key = event.currentTarget.dataset.key if event?.currentTarget?.dataset?.key?
+    index = event.currentTarget.dataset.index if event?.currentTarget?.dataset?.index?
+    console.log @samAssessmentId
+    console.log "resume/#{@samAssessmentId}/#{key}"
     @licomp()
     if $("button.resume-btn").length == 0
       $('div.controlls').append @btnresume
     else
       $("button.resume-btn").show()
     $("button.resume-btn").unbind("click").click () =>
-      console.log "Resume This Assessment #{@samAssessmentId}"
-  
+      Tangerine.router.navigate "resume/#{@samAssessmentId}/#{key}/#{index}" , true
+    
   clearButton: () ->
     $('button.restart-btn').hide()
     $('button.resume-btn').hide()
