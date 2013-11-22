@@ -37,7 +37,6 @@ Router = (function(_super) {
     'run/:id': 'run',
     'print/:id': 'print',
     'resume/:assessmentId/:resultId': 'resume',
-    'resume/:assessmentId/:resultId/:skip': 'resume',
     'restart/:id': 'restart',
     'edit/:id': 'edit',
     'csv/:id': 'csv',
@@ -548,7 +547,6 @@ Router = (function(_super) {
   };
 
   Router.prototype.resume = function(assessmentId, resultId, skip) {
-    console.log("Resuming");
     return Tangerine.user.verify({
       isRegistered: function() {
         var assessment;
@@ -575,15 +573,7 @@ Router = (function(_super) {
                   assessmentView: view
                 }));
                 view.index = result.get("subtestData").length;
-                vm.show(view);
-                console.log("length of subtestid is " + (result.get('subtestData').length));
-                if ((skip != null) && result.get("subtestData").length === 1) {
-                  console.log("Do auto by pass");
-                  $('input.search').val("a");
-                  $('input.search').trigger("keyup");
-                  $('*[data-index= 2 ]').trigger("click");
-                  return $('button.next').trigger("click");
-                }
+                return vm.show(view);
               }
             });
           }
@@ -779,7 +769,6 @@ Router = (function(_super) {
   };
 
   Router.prototype.progressReport = function(studentId) {
-    console.log("ASDAS");
     return Tangerine.user.verify({
       isRegistered: function() {
         var student;
