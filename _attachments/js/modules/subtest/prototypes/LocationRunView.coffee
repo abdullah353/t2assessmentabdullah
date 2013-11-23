@@ -12,8 +12,8 @@ class LocationRunView extends Backbone.View
     console.log @samAssessmentId
     @pendResAr = []
     @compResAr = []
-    @emptyResult=[]
     @penNam =[]
+    @penkeys=[]
     @compNam = []
     @samAssessmentId = options.parent.model.attributes.assessmentId
     @resultarray = new Results
@@ -26,8 +26,18 @@ class LocationRunView extends Backbone.View
             @compResAr.push result3.attributes.subtestData
           else 
             @pendResAr.push(result3.attributes.subtestData)
-            @emptyResult.push _(result3).pluck("_id") if result3.attributes.subtestData.length == 1
+            console.log "@penkeys.length length is below"
+            console.log @penkeys.length
+            @penkeys.push result3.id if @penkeys.length == 0
+            alreadyExist = off
+            _.each @penkeys , (penkey) =>
+              if penkey != result3.id
+                console.log "Already Exist"
+                alreadyExist = on
+            @penkeys.push result3.id if alreadyExist
 
+        console.log "result id arrays"
+        console.log @penkeys
         console.log "Pending Results Array"
         console.log @pendResAr
         _.each @pendResAr , (items) =>
@@ -73,14 +83,14 @@ class LocationRunView extends Backbone.View
     @li = _.template(template)
     control = '<button class="restart-btn navigation">Restart</button>'
     @btnreset = _.template(control)
-    control = '<button class="resume-btn navigation">Resume</button>'
-    @btnresume = _.template(control)
+    control1 = '<button class="resume-btn navigation">Resume</button>'
+    @btnresume = _.template(control1)
   clearInputs: ->
     for level, i in @levels
       @$el.find("#level_#{i}").val("")
 
   autofill: (event) ->
-    @clearButton
+    @clearButton()
     @$el.find(".autofill").fadeOut(250)
     index = $(event.target).attr("data-index")
     location = @locations[index]
@@ -130,16 +140,20 @@ class LocationRunView extends Backbone.View
     for location, j in @locations[i]
       templateInfo["level_" + j] = location
       abc = @li templateInfo
+      
+      _.each @penNam, (pendingname , i) =>
+        console.log @penkeys[i]
+        #important to keep type of same to comparison
+        a = []
+        a.push location
+        abc = abc.replace "<li class='cont'","<li class='lipend' style='color:red;' data-key='#{@penkeys[i]}' " if _.isEqual a, pendingname
+        
       _.each @compNam, (completename) ->
         #important to keep type of same to comparison
         a = []
         a.push location
         abc = abc.replace "<li class='cont'","<li class='licomp' style='color:green;'" if _.isEqual a, completename
-      _.each @penNam, (pendingname) ->
-        #important to keep type of same to comparison
-        a = []
-        a.push location
-        abc = abc.replace "<li class='cont'","<li class='lipend' style='color:red;'" if _.isEqual a, pendingname
+      
       console.log abc
     return abc
 
@@ -155,8 +169,8 @@ class LocationRunView extends Backbone.View
         <div class='label_value'>
           <label for='level_#{i}'>#{level}</label><br>
           <input class='search' val='' data-level='#{i}' id='samSearchBox' placeholder='Search For Student Name'>
-          <labe>Selected Student Name: </label>
-          <input data-level='#{i}' id='level_#{i}' value='' disabled>
+          <label>Selected Student Name: </label>
+          <input class='name-field' data-level='#{i}' id='level_#{i}' value='' disabled>
         </div>
         <div id='autofill_#{i}' class='autofill' style='display:none'>
           <h2>Select one from autofill list</h2>
@@ -215,16 +229,29 @@ class LocationRunView extends Backbone.View
     }
 
   licomp: (e) ->
-    @clearButton
     $("button.next").hide()
-    $('div.controlls').append @btnreset
-    $("button.restart-btn").click () ->
+    if $("button.restart-btn").length == 0
+      $('div.controlls').append @btnreset
+    else
+      $("button.restart-btn").show()
+    $("button.restart-btn").unbind("click").click () ->
       if confirm "Are You Sure You Want To Restart This Assessment."
         $("button.next").trigger "click" 
 
-  lipend: (e) ->
-
+  lipend: (event) ->
+    key = event.currentTarget.dataset.key if event?.currentTarget?.dataset?.key?
+    index = event.currentTarget.dataset.index if event?.currentTarget?.dataset?.index?
+    console.log @samAssessmentId
+    console.log "resume/#{@samAssessmentId}/#{key}"
+    @licomp()
+    if $("button.resume-btn").length == 0
+      $('div.controlls').append @btnresume
+    else
+      $("button.resume-btn").show()
+    $("button.resume-btn").unbind("click").click () =>
+      Tangerine.router.navigate "resume/#{@samAssessmentId}/#{key}" , true
+    
   clearButton: () ->
-    $('button.restart-btn').remove()
-    $('button.resume-btn').remove()
+    $('button.restart-btn').hide()
+    $('button.resume-btn').hide()
     $('button.next').show()
