@@ -769,7 +769,6 @@ Router = (function(_super) {
   };
 
   Router.prototype.progressReport = function(studentId) {
-    console.log("ASDAS");
     return Tangerine.user.verify({
       isRegistered: function() {
         var student;
