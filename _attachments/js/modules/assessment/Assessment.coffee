@@ -3,7 +3,7 @@ class Assessment extends Backbone.Model
   url: 'assessment'
 
   initialize: (options={}) ->
-    # this collection doesn't get saved
+    # this collection doesnt get saved
     # changes update the subtest view, it keeps order
     @subtests = new Subtests
 
@@ -31,9 +31,9 @@ class Assessment extends Backbone.Model
       data: keys: dKeys
       success: (data) =>
         docList = []
-        for datum in data.rows
-          docList.push datum.id
-        $.couch.replicate(
+        docList.push datum.id for datum in data.rows
+        @trigger "status", "import empty" if data.rows.length == 0
+        if data.rows.length != 0 then $.couch.replicate(
           Tangerine.config.address.cloud.host+"/"+Tangerine.config.address.cloud.dbName,
           Tangerine.config.address.local.dbName,
             success:      => @trigger "status", "import success"
