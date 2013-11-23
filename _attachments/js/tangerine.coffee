@@ -37,7 +37,7 @@ class Router extends Backbone.Router
     'print/:id'       : 'print'
 
     'resume/:assessmentId/:resultId'    : 'resume'
-
+    
     'restart/:id'   : 'restart'
     'edit/:id'      : 'edit'
     'csv/:id'       : 'csv'
@@ -340,8 +340,7 @@ class Router extends Backbone.Router
       isUnregistered: (options) ->
         Tangerine.router.navigate "login", true
 
-  resume: (assessmentId, resultId, skip) ->
-    #console.log "Resuming"
+  resume: (assessmentId, resultId) ->
     Tangerine.user.verify
       isRegistered: ->
         assessment = new Assessment
@@ -364,6 +363,7 @@ class Router extends Backbone.Router
                 vm.show view
       isUnregistered: (options) ->
         Tangerine.router.navigate "login", true
+
 
   results: (assessmentId) ->
     Tangerine.user.verify
@@ -465,7 +465,7 @@ class Router extends Backbone.Router
                     vm.show view
 
   progressReport: (studentId) ->
-    #console.log "ASDAS"
+    console.log "ASDAS"
     Tangerine.user.verify
       isRegistered: ->
         student = new Student "_id" : studentId

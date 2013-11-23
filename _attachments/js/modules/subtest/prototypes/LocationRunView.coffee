@@ -140,17 +140,20 @@ class LocationRunView extends Backbone.View
     for location, j in @locations[i]
       templateInfo["level_" + j] = location
       abc = @li templateInfo
-      _.each @compNam, (completename) ->
-        #important to keep type of same to comparison
-        a = []
-        a.push location
-        abc = abc.replace "<li class='cont'","<li class='licomp' style='color:green;'" if _.isEqual a, completename
+      
       _.each @penNam, (pendingname , i) =>
         #console.log @penkeys[i]
         #important to keep type of same to comparison
         a = []
         a.push location
         abc = abc.replace "<li class='cont'","<li class='lipend' style='color:red;' data-key='#{@penkeys[i]}' " if _.isEqual a, pendingname
+        
+      _.each @compNam, (completename) ->
+        #important to keep type of same to comparison
+        a = []
+        a.push location
+        abc = abc.replace "<li class='cont'","<li class='licomp' style='color:green;'" if _.isEqual a, completename
+      
       #console.log abc
     return abc
 

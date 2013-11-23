@@ -198,20 +198,20 @@ LocationRunView = (function(_super) {
       location = _ref1[j];
       templateInfo["level_" + j] = location;
       abc = this.li(templateInfo);
-      _.each(this.compNam, function(completename) {
-        var a;
-        a = [];
-        a.push(location);
-        if (_.isEqual(a, completename)) {
-          return abc = abc.replace("<li class='cont'", "<li class='licomp' style='color:green;'");
-        }
-      });
       _.each(this.penNam, function(pendingname, i) {
         var a;
         a = [];
         a.push(location);
         if (_.isEqual(a, pendingname)) {
           return abc = abc.replace("<li class='cont'", "<li class='lipend' style='color:red;' data-key='" + _this.penkeys[i] + "' ");
+        }
+      });
+      _.each(this.compNam, function(completename) {
+        var a;
+        a = [];
+        a.push(location);
+        if (_.isEqual(a, completename)) {
+          return abc = abc.replace("<li class='cont'", "<li class='licomp' style='color:green;'");
         }
       });
     }
