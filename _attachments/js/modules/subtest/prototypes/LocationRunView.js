@@ -22,8 +22,6 @@ LocationRunView = (function(_super) {
   LocationRunView.prototype.initialize = function(options) {
     var control, control1, i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
       _this = this;
-    console.log("Options in initialize");
-    console.log(this.samAssessmentId);
     this.pendResAr = [];
     this.compResAr = [];
     this.penNam = [];
@@ -36,20 +34,16 @@ LocationRunView = (function(_super) {
       success: function(gotresult) {
         _.each(gotresult.models, function(result3) {
           var alreadyExist, _ref1;
-          console.log(result3);
           if (((_ref1 = _.last(result3.attributes.subtestData)) != null ? _ref1.data.end_time : void 0) != null) {
             return _this.compResAr.push(result3.attributes.subtestData);
           } else {
             _this.pendResAr.push(result3.attributes.subtestData);
-            console.log("@penkeys.length length is below");
-            console.log(_this.penkeys.length);
             if (_this.penkeys.length === 0) {
               _this.penkeys.push(result3.id);
             }
             alreadyExist = false;
             _.each(_this.penkeys, function(penkey) {
               if (penkey !== result3.id) {
-                console.log("Already Exist");
                 return alreadyExist = true;
               }
             });
@@ -58,10 +52,6 @@ LocationRunView = (function(_super) {
             }
           }
         });
-        console.log("result id arrays");
-        console.log(_this.penkeys);
-        console.log("Pending Results Array");
-        console.log(_this.pendResAr);
         _.each(_this.pendResAr, function(items) {
           return _.each(items, function(item) {
             var _ref1;
@@ -70,14 +60,11 @@ LocationRunView = (function(_super) {
             }
           });
         });
-        console.log("Completed Reuslt");
-        console.log(_this.compResAr);
         return _.each(_this.compResAr, function(items) {
           return _.each(items, function(item) {
             var _ref1;
             if (((item != null ? item.prototype : void 0) != null) && item.prototype === "location" && (((_ref1 = item.data) != null ? _ref1.location : void 0) != null)) {
-              _this.compNam.push(item.data.location);
-              return console.log(_this.compNam);
+              return _this.compNam.push(item.data.location);
             }
           });
         });
@@ -87,8 +74,6 @@ LocationRunView = (function(_super) {
     this.parent = this.options.parent;
     this.levels = this.model.get("levels") || [];
     this.locations = this.model.get("locations") || [];
-    console.log("Locations are");
-    console.log(this.locations);
     if (this.levels.length === 1 && this.levels[0] === "") {
       this.levels = [];
     }
@@ -103,8 +88,6 @@ LocationRunView = (function(_super) {
       for (_j = 0, _len1 = location.length; _j < _len1; _j++) {
         locationData = location[_j];
         this.haystack[i].push(locationData.toLowerCase());
-        console.log("@haystack result is");
-        console.log(this.haystack);
       }
     }
     template = "<li class='cont' data-index='{{i}}'>";
@@ -153,8 +136,6 @@ LocationRunView = (function(_super) {
   LocationRunView.prototype.showOptions = function(event) {
     var atLeastOne, field, html, i, isThere, j, needle, otherField, result, results, stack, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref1, _ref2, _ref3;
     needle = $(event.target).val().toLowerCase();
-    console.log("needle is");
-    console.log(needle);
     if (needle === '') {
       return $('.autofill').hide();
     } else {
@@ -219,7 +200,6 @@ LocationRunView = (function(_super) {
       abc = this.li(templateInfo);
       _.each(this.penNam, function(pendingname, i) {
         var a;
-        console.log(_this.penkeys[i]);
         a = [];
         a.push(location);
         if (_.isEqual(a, pendingname)) {
@@ -234,7 +214,6 @@ LocationRunView = (function(_super) {
           return abc = abc.replace("<li class='cont'", "<li class='licomp' style='color:green;'");
         }
       });
-      console.log(abc);
     }
     return abc;
   };
@@ -388,8 +367,6 @@ LocationRunView = (function(_super) {
     if ((event != null ? (_ref3 = event.currentTarget) != null ? (_ref4 = _ref3.dataset) != null ? _ref4.index : void 0 : void 0 : void 0) != null) {
       index = event.currentTarget.dataset.index;
     }
-    console.log(this.samAssessmentId);
-    console.log("resume/" + this.samAssessmentId + "/" + key);
     this.licomp();
     if ($("button.resume-btn").length === 0) {
       $('div.controlls').append(this.btnresume);
