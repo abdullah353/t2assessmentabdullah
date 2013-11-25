@@ -19,9 +19,7 @@ Results = (function(_super) {
     view: "resultsByAssessmentId"
   };
 
-  Results.prototype.initialize = function() {
-    return console.log("Results Collection initialized");
-  };
+  Results.prototype.initialize = function() {};
 
   Results.prototype.comparator = function(model) {
     return model.get('timestamp') || 0;

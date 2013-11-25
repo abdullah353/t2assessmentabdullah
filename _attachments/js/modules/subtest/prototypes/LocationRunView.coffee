@@ -85,11 +85,14 @@ class LocationRunView extends Backbone.View
     @btnreset = _.template(control)
     control1 = '<button class="resume-btn navigation">Resume</button>'
     @btnresume = _.template(control1)
+
   clearInputs: ->
+    @clearMessage()
     for level, i in @levels
       @$el.find("#level_#{i}").val("")
 
   autofill: (event) ->
+    @clearMessage()
     @clearButton()
     @$el.find(".autofill").fadeOut(250)
     index = $(event.target).attr("data-index")
@@ -99,6 +102,7 @@ class LocationRunView extends Backbone.View
 
 
   showOptions: (event) ->
+    @clearMessage()
     needle = $(event.target).val().toLowerCase()
     #console.log "needle is"
     #console.log needle
@@ -203,9 +207,9 @@ class LocationRunView extends Backbone.View
     true
 
   showErrors: ->
-    for input in @$el.find("input")
+    for input in @$el.find("input.name-field")
       if $(input).val() == ""
-        $(input).after " <span class='message'>#{$('label[for='+$(input).attr('id')+']').text()} cannot be empty</span>"
+        $(input).after " <span class='message' style='color:red'>Please Select a student to proceed.</span>"
 
   getSum: ->
     counts =
@@ -255,3 +259,6 @@ class LocationRunView extends Backbone.View
     $('button.restart-btn').hide()
     $('button.resume-btn').hide()
     $('button.next').show()
+
+  clearMessage: ->
+    $('span.message').hide()

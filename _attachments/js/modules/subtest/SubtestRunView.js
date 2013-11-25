@@ -28,12 +28,6 @@ SubtestRunView = (function(_super) {
     this.protoViews = Tangerine.config.prototypeViews;
     this.model = options.model;
     this.parent = options.parent;
-    console.log("#db options argument recieved by SubtestRunView");
-    console.log(options);
-    console.log("#db options.model for SubtestRunView");
-    console.log(options.model);
-    console.log("#db options.parent for SubtestRunView");
-    console.log(options.parent);
     return this.prototypeRendered = false;
   };
 

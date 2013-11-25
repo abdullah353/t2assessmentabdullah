@@ -23,15 +23,9 @@ Subtests = (function(_super) {
     return subtest.get("order");
   };
 
-  Subtests.prototype.initialize = function(options) {
-    return console.log("I am Subtests Collection initialize");
-  };
+  Subtests.prototype.initialize = function(options) {};
 
   Subtests.prototype.fetch = function(options) {
-    console.log("#db Below if the arguments of Fetch Subtests Collection");
-    console.log(options);
-    console.log("#db what is super in Collection Subtests");
-    console.log(Subtests.__super__.fetch.apply(this, arguments));
     return Subtests.__super__.fetch.call(this, options);
   };
 

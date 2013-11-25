@@ -14,15 +14,9 @@ class ResultSumView extends Backbone.View
     @$el.find('.detail_box').toggle(250)
 
   initialize: ( options ) ->
-    console.log "I am in ResultSumView initialize Below is options arguments"
-    console.log options
     @result = options.model
-    console.log "finished Check"
-    console.log options.finishCheck
     @finishCheck = options.finishCheck
     @finished = if _.last(@result.attributes.subtestData)?.data.end_time? then true else false
-    console.log "Finsed Out put"
-    console.log @finished
     @studentId = ""
     for subtest in @result.attributes.subtestData
       prototype = subtest.prototype

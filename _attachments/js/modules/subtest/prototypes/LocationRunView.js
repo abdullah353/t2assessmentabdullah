@@ -109,6 +109,7 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.clearInputs = function() {
     var i, level, _i, _len, _ref1, _results;
+    this.clearMessage();
     _ref1 = this.levels;
     _results = [];
     for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
@@ -120,6 +121,7 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.autofill = function(event) {
     var i, index, level, location, _i, _len, _ref1, _results;
+    this.clearMessage();
     this.clearButton();
     this.$el.find(".autofill").fadeOut(250);
     index = $(event.target).attr("data-index");
@@ -135,6 +137,7 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.showOptions = function(event) {
     var atLeastOne, field, html, i, isThere, j, needle, otherField, result, results, stack, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref1, _ref2, _ref3;
+    this.clearMessage();
     needle = $(event.target).val().toLowerCase();
     if (needle === '') {
       return $('.autofill').hide();
@@ -298,12 +301,12 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.showErrors = function() {
     var input, _i, _len, _ref1, _results;
-    _ref1 = this.$el.find("input");
+    _ref1 = this.$el.find("input.name-field");
     _results = [];
     for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
       input = _ref1[_i];
       if ($(input).val() === "") {
-        _results.push($(input).after(" <span class='message'>" + ($('label[for=' + $(input).attr('id') + ']').text()) + " cannot be empty</span>"));
+        _results.push($(input).after(" <span class='message' style='color:red'>Please Select a student to proceed.</span>"));
       } else {
         _results.push(void 0);
       }
@@ -382,6 +385,10 @@ LocationRunView = (function(_super) {
     $('button.restart-btn').hide();
     $('button.resume-btn').hide();
     return $('button.next').show();
+  };
+
+  LocationRunView.prototype.clearMessage = function() {
+    return $('span.message').hide();
   };
 
   return LocationRunView;
