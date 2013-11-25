@@ -13,17 +13,19 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.events = {
     "click .school_list li": "autofill",
+    "click .school_list li.licomp": "licomp",
+    "click .school_list li.lipend": "lipend",
     "keyup input.search": "showOptions",
     "click .clear": "clearInputs"
   };
 
   LocationRunView.prototype.initialize = function(options) {
-    var i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
+    var control, control1, i, level, location, locationData, template, _i, _j, _k, _len, _len1, _len2, _ref1, _ref2,
       _this = this;
     this.pendResAr = [];
     this.compResAr = [];
-    this.emptyResult = [];
     this.penNam = [];
+    this.penkeys = [];
     this.compNam = [];
     this.samAssessmentId = options.parent.model.attributes.assessmentId;
     this.resultarray = new Results;
@@ -31,13 +33,22 @@ LocationRunView = (function(_super) {
       "_id": this.samAssessmentId,
       success: function(gotresult) {
         _.each(gotresult.models, function(result3) {
-          var _ref1;
+          var alreadyExist, _ref1;
           if (((_ref1 = _.last(result3.attributes.subtestData)) != null ? _ref1.data.end_time : void 0) != null) {
             return _this.compResAr.push(result3.attributes.subtestData);
           } else {
             _this.pendResAr.push(result3.attributes.subtestData);
-            if (result3.attributes.subtestData.length === 1) {
-              return _this.emptyResult.push(_(result3).pluck("_id"));
+            if (_this.penkeys.length === 0) {
+              _this.penkeys.push(result3.id);
+            }
+            alreadyExist = false;
+            _.each(_this.penkeys, function(penkey) {
+              if (penkey !== result3.id) {
+                return alreadyExist = true;
+              }
+            });
+            if (alreadyExist) {
+              return _this.penkeys.push(result3.id);
             }
           }
         });
@@ -79,7 +90,7 @@ LocationRunView = (function(_super) {
         this.haystack[i].push(locationData.toLowerCase());
       }
     }
-    template = "<li data-index='{{i}}'>";
+    template = "<li class='cont' data-index='{{i}}'>";
     _ref2 = this.levels;
     for (i = _k = 0, _len2 = _ref2.length; _k < _len2; i = ++_k) {
       level = _ref2[i];
@@ -89,7 +100,11 @@ LocationRunView = (function(_super) {
       }
     }
     template += "</li>";
-    return this.li = _.template(template);
+    this.li = _.template(template);
+    control = '<button class="restart-btn navigation">Restart</button>';
+    this.btnreset = _.template(control);
+    control1 = '<button class="resume-btn navigation">Resume</button>';
+    return this.btnresume = _.template(control1);
   };
 
   LocationRunView.prototype.clearInputs = function() {
@@ -105,6 +120,7 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.autofill = function(event) {
     var i, index, level, location, _i, _len, _ref1, _results;
+    this.clearButton();
     this.$el.find(".autofill").fadeOut(250);
     index = $(event.target).attr("data-index");
     location = this.locations[index];
@@ -172,7 +188,8 @@ LocationRunView = (function(_super) {
   };
 
   LocationRunView.prototype.getLocationLi = function(i) {
-    var abc, j, location, templateInfo, _i, _len, _ref1;
+    var abc, j, location, templateInfo, _i, _len, _ref1,
+      _this = this;
     templateInfo = {
       "i": i
     };
@@ -181,20 +198,20 @@ LocationRunView = (function(_super) {
       location = _ref1[j];
       templateInfo["level_" + j] = location;
       abc = this.li(templateInfo);
+      _.each(this.penNam, function(pendingname, i) {
+        var a;
+        a = [];
+        a.push(location);
+        if (_.isEqual(a, pendingname)) {
+          return abc = abc.replace("<li class='cont'", "<li class='lipend' style='color:red;' data-key='" + _this.penkeys[i] + "' ");
+        }
+      });
       _.each(this.compNam, function(completename) {
         var a;
         a = [];
         a.push(location);
         if (_.isEqual(a, completename)) {
-          return abc = abc.replace("<li", "<li style='color:green;'");
-        }
-      });
-      _.each(this.penNam, function(pendingname) {
-        var a;
-        a = [];
-        a.push(location);
-        if (_.isEqual(a, pendingname)) {
-          return abc = abc.replace("<li", "<li style='color:red;'");
+          return abc = abc.replace("<li class='cont'", "<li class='licomp' style='color:green;'");
         }
       });
     }
@@ -208,7 +225,7 @@ LocationRunView = (function(_super) {
     _ref1 = this.levels;
     for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
       level = _ref1[i];
-      html += "        <div class='label_value'>          <label for='level_" + i + "'>" + level + "</label><br>          <input class='search' val='' data-level='" + i + "' id='samSearchBox' placeholder='Search For Student Name'>          <labe>Selected Student Name: </label>          <input data-level='" + i + "' id='level_" + i + "' value='' disabled>        </div>        <div id='autofill_" + i + "' class='autofill' style='display:none'>          <h2>Select one from autofill list</h2>          <ul class='school_list' id='school_list_" + i + "'>          </ul>        </div>    ";
+      html += "        <div class='label_value'>          <label for='level_" + i + "'>" + level + "</label><br>          <input class='search' val='' data-level='" + i + "' id='samSearchBox' placeholder='Search For Student Name'>          <label>Selected Student Name: </label>          <input class='name-field' data-level='" + i + "' id='level_" + i + "' value='' disabled>        </div>        <div id='autofill_" + i + "' class='autofill' style='display:none'>          <h2>Select one from autofill list</h2>          <ul class='school_list' id='school_list_" + i + "'>          </ul>        </div>    ";
     }
     this.$el.html(html);
     return this.trigger("rendered");
@@ -325,6 +342,46 @@ LocationRunView = (function(_super) {
       missing: counts['missing'],
       total: counts['total']
     };
+  };
+
+  LocationRunView.prototype.licomp = function(e) {
+    $("button.next").hide();
+    if ($("button.restart-btn").length === 0) {
+      $('div.controlls').append(this.btnreset);
+    } else {
+      $("button.restart-btn").show();
+    }
+    return $("button.restart-btn").unbind("click").click(function() {
+      if (confirm("Are You Sure You Want To Restart This Assessment.")) {
+        return $("button.next").trigger("click");
+      }
+    });
+  };
+
+  LocationRunView.prototype.lipend = function(event) {
+    var index, key, _ref1, _ref2, _ref3, _ref4,
+      _this = this;
+    if ((event != null ? (_ref1 = event.currentTarget) != null ? (_ref2 = _ref1.dataset) != null ? _ref2.key : void 0 : void 0 : void 0) != null) {
+      key = event.currentTarget.dataset.key;
+    }
+    if ((event != null ? (_ref3 = event.currentTarget) != null ? (_ref4 = _ref3.dataset) != null ? _ref4.index : void 0 : void 0 : void 0) != null) {
+      index = event.currentTarget.dataset.index;
+    }
+    this.licomp();
+    if ($("button.resume-btn").length === 0) {
+      $('div.controlls').append(this.btnresume);
+    } else {
+      $("button.resume-btn").show();
+    }
+    return $("button.resume-btn").unbind("click").click(function() {
+      return Tangerine.router.navigate("resume/" + _this.samAssessmentId + "/" + key, true);
+    });
+  };
+
+  LocationRunView.prototype.clearButton = function() {
+    $('button.restart-btn').hide();
+    $('button.resume-btn').hide();
+    return $('button.next').show();
   };
 
   return LocationRunView;
