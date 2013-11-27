@@ -58,6 +58,9 @@ class AssessmentImportView extends Backbone.View
     else if status == "import error"
       clearInterval @activeTaskInterval
       @activity = "Import error: #{message}"
+    else if status == "import empty"
+      clearInterval @activeTaskInterval
+      @activity = "Nothing Found: Please Check your Key"
 
     @updateProgress()
 

@@ -465,7 +465,6 @@ class Router extends Backbone.Router
                     vm.show view
 
   progressReport: (studentId) ->
-    #console.log "ASDAS"
     Tangerine.user.verify
       isRegistered: ->
         student = new Student "_id" : studentId

@@ -81,6 +81,7 @@ LocationRunView = (function(_super) {
       this.locations = [];
     }
     this.haystack = [];
+    this.locations = this.locations.sort();
     _ref1 = this.locations;
     for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
       location = _ref1[i];
@@ -110,6 +111,7 @@ LocationRunView = (function(_super) {
   LocationRunView.prototype.clearInputs = function() {
     var i, level, _i, _len, _ref1, _results;
     this.clearMessage();
+    this.clearButton();
     _ref1 = this.levels;
     _results = [];
     for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
@@ -306,7 +308,7 @@ LocationRunView = (function(_super) {
     for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
       input = _ref1[_i];
       if ($(input).val() === "") {
-        _results.push($(input).after(" <span class='message' style='color:red'>Please Select a student to proceed.</span>"));
+        _results.push($(input).after(" <span class='message' style='color:red'>Please select a student to proceed.</span>"));
       } else {
         _results.push(void 0);
       }
@@ -355,7 +357,7 @@ LocationRunView = (function(_super) {
       $("button.restart-btn").show();
     }
     return $("button.restart-btn").unbind("click").click(function() {
-      if (confirm("Are You Sure You Want To Restart This Assessment.")) {
+      if (confirm("Are you sure you want to restart this assessment?")) {
         return $("button.next").trigger("click");
       }
     });

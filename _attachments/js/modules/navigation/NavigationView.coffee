@@ -22,7 +22,7 @@ class NavigationView extends Backbone.View
       @router.navigate '', true
     else
       if Tangerine.activity == "assessment run"
-        if confirm("Assessment not finished. Continue to main screen?")
+        if confirm("Assessment not finished. Continue to main?")
           Tangerine.activity = ""
           @router.navigate '', true
       else
