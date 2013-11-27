@@ -52,7 +52,7 @@ class LocationRunView extends Backbone.View
       @locations = []
 
     @haystack = []
-
+    @locations = @locations.sort()
     for location, i in @locations
       @haystack[i] = []
       for locationData in location
@@ -72,6 +72,7 @@ class LocationRunView extends Backbone.View
 
   clearInputs: ->
     @clearMessage()
+    @clearButton()
     for level, i in @levels
       @$el.find("#level_#{i}").val("")
 
@@ -188,7 +189,7 @@ class LocationRunView extends Backbone.View
   showErrors: ->
     for input in @$el.find("input.name-field")
       if $(input).val() == ""
-        $(input).after " <span class='message' style='color:red'>Please Select a student to proceed.</span>"
+        $(input).after " <span class='message' style='color:red'>Please select a student to proceed.</span>"
 
   getSum: ->
     counts =
@@ -218,7 +219,7 @@ class LocationRunView extends Backbone.View
     else
       $("button.restart-btn").show()
     $("button.restart-btn").unbind("click").click () ->
-      if confirm "Are You Sure You Want To Restart This Assessment."
+      if confirm "Are you sure you want to restart this assessment?"
         $("button.next").trigger "click" 
 
   lipend: (event) ->
