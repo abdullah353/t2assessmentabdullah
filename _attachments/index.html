@@ -221,27 +221,31 @@ function onOnline() {
 var allResult = new Results();
 allResult.fetch();
 setTimeout(function(){storeResult()},2000);
+
 function storeResult() {
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS);
 }
 
 function gotFS(fileSystem) {
-    fileSystem.root.getFile("results.json", {create: true, exclusive: false}, gotFileEntry, fail);
-    }
+    alert("gotFS")
+   fileSystem.root.getDirectory("data", {create: true}, gotDir);
+}
 
-function gotFileEntry(fileEntry) {
-        fileEntry.createWriter(gotFileWriter, fail);
-    }
+function gotDir(dirEntry) {
+    alert("gotDir")
+    var d = new Date();
+    var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+    dirEntry.getFile("result"+strDate+".txt", {create: true, exclusive: false}, gotFile);
+}
+function gotFile(fileEntry){
+    alert("gotFile");
+    fileEntry.createWriter(gotFileWriter);
+}
 
 function gotFileWriter(writer) {
-        writer.onwriteend = function(evt) {
-
-        };
-        writer.write(JSON.stringify(allResult));
-    }
-
-function fail(error) {
-    }
+    writer.onwriteend = function(evt) {};
+    writer.write(JSON.stringify(allResult));
+}
 
 </script>
 </body>

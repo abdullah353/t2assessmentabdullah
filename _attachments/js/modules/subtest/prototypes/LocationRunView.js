@@ -139,6 +139,7 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.showOptions = function(event) {
     var atLeastOne, field, html, i, isThere, j, needle, otherField, result, results, stack, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref1, _ref2, _ref3;
+    console.log(event);
     this.clearMessage();
     needle = $(event.target).val().toLowerCase();
     if (needle === '') {
@@ -224,13 +225,18 @@ LocationRunView = (function(_super) {
   };
 
   LocationRunView.prototype.render = function() {
-    var html, i, level, schoolListElements, _i, _len, _ref1;
+    var html, i, level, schoolListElements, _i, _j, _len, _len1, _ref1, _ref2;
     schoolListElements = "";
-    html = "      <button class='clear command'>Clear</button>      ";
     _ref1 = this.levels;
     for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
       level = _ref1[i];
-      html += "        <div class='label_value'>          <label for='level_" + i + "'>" + level + "</label><br>          <input class='search' val='' data-level='" + i + "' id='samSearchBox' placeholder='Search For Student Name'>          <label>Selected Student Name: </label>          <input class='name-field' data-level='" + i + "' id='level_" + i + "' value='' disabled>        </div>        <div id='autofill_" + i + "' class='autofill' style='display:none'>          <h2>Select one from autofill list</h2>          <ul class='school_list' id='school_list_" + i + "'>          </ul>        </div>    ";
+      html = "<input class='search' val='' data-level='" + i + "' id='samSearchBox' placeholder='Search For Student Name'>";
+    }
+    html += "      <button class='clear command'>Clear</button>      ";
+    _ref2 = this.levels;
+    for (i = _j = 0, _len1 = _ref2.length; _j < _len1; i = ++_j) {
+      level = _ref2[i];
+      html += "        <div class='label_value'>          <label>Selected Student Name: </label>          <input class='name-field' data-level='" + i + "' id='level_" + i + "' value='' disabled>        </div>        <div id='autofill_" + i + "' class='autofill' style='display:none'>          <h2>Select one from autofill list</h2>          <ul class='school_list' id='school_list_" + i + "'>          </ul>        </div>    ";
     }
     this.$el.html(html);
     return this.trigger("rendered");

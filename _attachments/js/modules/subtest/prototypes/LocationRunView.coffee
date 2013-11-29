@@ -87,6 +87,7 @@ class LocationRunView extends Backbone.View
 
 
   showOptions: (event) ->
+    console.log event
     @clearMessage()
     needle = $(event.target).val().toLowerCase()
     if needle == ''
@@ -143,16 +144,17 @@ class LocationRunView extends Backbone.View
 
   render: ->
     schoolListElements = ""
+    
+    for level, i in @levels
+    	html = "<input class='search' val='' data-level='#{i}' id='samSearchBox' placeholder='Search For Student Name'>"
 
-    html = "
+    html += "
       <button class='clear command'>Clear</button>
       ";
 
     for level, i in @levels
       html += "
         <div class='label_value'>
-          <label for='level_#{i}'>#{level}</label><br>
-          <input class='search' val='' data-level='#{i}' id='samSearchBox' placeholder='Search For Student Name'>
           <label>Selected Student Name: </label>
           <input class='name-field' data-level='#{i}' id='level_#{i}' value='' disabled>
         </div>

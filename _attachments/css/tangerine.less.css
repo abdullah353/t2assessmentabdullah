@@ -1779,9 +1779,7 @@ button.ui-button::-moz-focus-inner {
   background-color: #bcd63f;
 }
 #samSearchBox {
-  float: right;
   width: 300px;
-  margin-top: -90px;
   margin-right: 40px;
 }
 .compAssessName {
