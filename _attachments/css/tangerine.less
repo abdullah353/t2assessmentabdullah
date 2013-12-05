@@ -276,13 +276,13 @@ textarea[contenteditable] {-webkit-appearance: none;}
 @hside: 0;
 @hbottom: 5px;
 
-@orange-1: #F26F10;
-@orange-2: #F49B00;
+@orange-1: #366D29;
+@orange-2: #bcd63f;
 @orange-3: #BCD63F;
 @orange-4: #F6EF9A;
 @grey: #888;
 
-@grey-1: #CCC;
+@grey-1: #E7E7E7;
 @grey-2: #999;
 @grey-3: #333;
 
@@ -1556,7 +1556,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 
 /* Interaction states
 ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { background: @grey-1; color: @grey-2; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { background: @grey-1; }
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: @orange-4; text-decoration: none; }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover { color: @grey-3; }
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { color: @grey-3; }
@@ -1644,7 +1644,7 @@ input.ui-button { padding: .4em 1em; }
 
 /*button sets*/
 .ui-buttonset { margin-right: 7px; }
-.ui-buttonset .ui-button { margin-left: 0; margin-right: -10px; }
+.ui-buttonset .ui-button { margin-left: 0; margin-right: 0px; min-width:60px;}
 
 /* workarounds */
 button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
