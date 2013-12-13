@@ -30,7 +30,7 @@ LocationRunView = (function(_super) {
     this.samAssessmentId = options.parent.model.attributes.assessmentId;
     this.resultarray = new Results;
     this.resultarray.fetch({
-      "_id": this.samAssessmentId,
+      "key": this.samAssessmentId,
       success: function(gotresult) {
         _.each(gotresult.models, function(result3) {
           var alreadyExist, _ref1;
@@ -112,6 +112,8 @@ LocationRunView = (function(_super) {
     var i, level, _i, _len, _ref1, _results;
     this.clearMessage();
     this.clearButton();
+    $('#samSearchBox').val('');
+    $('.tohide').hide();
     _ref1 = this.levels;
     _results = [];
     for (i = _i = 0, _len = _ref1.length; _i < _len; i = ++_i) {
@@ -125,6 +127,7 @@ LocationRunView = (function(_super) {
     var i, index, level, location, _i, _len, _ref1, _results;
     this.clearMessage();
     this.clearButton();
+    $('.tohide').show();
     this.$el.find(".autofill").fadeOut(250);
     index = $(event.target).attr("data-index");
     location = this.locations[index];
@@ -139,7 +142,6 @@ LocationRunView = (function(_super) {
 
   LocationRunView.prototype.showOptions = function(event) {
     var atLeastOne, field, html, i, isThere, j, needle, otherField, result, results, stack, _i, _j, _k, _l, _len, _len1, _len2, _len3, _m, _ref1, _ref2, _ref3;
-    console.log(event);
     this.clearMessage();
     needle = $(event.target).val().toLowerCase();
     if (needle === '') {
@@ -154,11 +156,9 @@ LocationRunView = (function(_super) {
       _ref2 = this.haystack;
       for (i = _j = 0, _len = _ref2.length; _j < _len; i = ++_j) {
         stack = _ref2[i];
-        isThere = ~this.haystack[i][field].indexOf(needle);
-        if (isThere) {
+        isThere = this.haystack[i][field].search(new RegExp('^' + needle, "i"));
+        if (isThere === 0) {
           results.push(i);
-        }
-        if (isThere) {
           atLeastOne = true;
         }
       }
@@ -194,7 +194,7 @@ LocationRunView = (function(_super) {
   };
 
   LocationRunView.prototype.getLocationLi = function(i) {
-    var abc, j, location, templateInfo, _i, _len, _ref1,
+    var abc, j, k, location, templateInfo, _i, _len, _ref1,
       _this = this;
     templateInfo = {
       "i": i
@@ -204,14 +204,22 @@ LocationRunView = (function(_super) {
       location = _ref1[j];
       templateInfo["level_" + j] = location;
       abc = this.li(templateInfo);
+      k = false;
       _.each(this.penNam, function(pendingname, i) {
         var a;
         a = [];
         a.push(location);
         if (_.isEqual(a, pendingname)) {
-          return abc = abc.replace("<li class='cont'", "<li class='lipend' style='color:red;' data-key='" + _this.penkeys[i] + "' ");
+          abc = abc.replace("<li class='cont'", "<li class='lipend' style='color:red;' data-key='" + _this.penkeys[i] + "' ");
+        }
+        if (_.isEqual(a, pendingname)) {
+          return k = true;
         }
       });
+      if (k === true) {
+        abc = abc.replace("</li>", " (Incomplete) </li>");
+      }
+      k = false;
       _.each(this.compNam, function(completename) {
         var a;
         a = [];
@@ -236,7 +244,7 @@ LocationRunView = (function(_super) {
     _ref2 = this.levels;
     for (i = _j = 0, _len1 = _ref2.length; _j < _len1; i = ++_j) {
       level = _ref2[i];
-      html += "        <div class='label_value'>          <label>Selected Student Name: </label>          <input class='name-field' data-level='" + i + "' id='level_" + i + "' value='' disabled>        </div>        <div id='autofill_" + i + "' class='autofill' style='display:none'>          <h2>Select one from autofill list</h2>          <ul class='school_list' id='school_list_" + i + "'>          </ul>        </div>    ";
+      html += "        <div class='label_value tohide' style='display:none'>          <label>Selected Student Name: </label>          <input class='name-field' data-level='" + i + "' id='level_" + i + "' value='' disabled style='background:white;border:0px;width: 70%;color:#476F00 !important;font-weight: bold;'>        </div>        <div id='autofill_" + i + "' class='autofill' style='display:none'>          <h2>Select one from autofill list</h2>          <ul class='school_list' id='school_list_" + i + "'>          </ul>        </div>    ";
     }
     this.$el.html(html);
     return this.trigger("rendered");

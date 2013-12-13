@@ -5,6 +5,7 @@ class AccountView extends Backbone.View
     'click .join_cancel' : 'joinToggle'
     'click .join'        : 'joinToggle'
     'click .join_group'  : 'join'
+    'click .config'  : 'config'
     'click .back'        : 'goBack'
     'click #mode_buttons input' : 'changeMode'
 
@@ -38,10 +39,22 @@ class AccountView extends Backbone.View
 
   initialize: ( options ) ->
     @user = options.user
-  
+    @role = @user.roles.join()
+    if @role == "_admin" then @visible = 'block' else @visible = 'none'
+
   render: ->
+    @config = "" 
     html = "
       <button class='back navigation'>Back</button>
+      <div style='display:#{@visible}'>
+        <h1>Server Configuration</h1>
+        <p><strong>Current Server is : #{Tangerine.config.address.cloud.host}</strong> </p>
+        <select class='serverurl space15'>
+          <option value='http://tangerine.iriscouch.com'>Tangerine Server</option>
+          <option value='http://192.168.2.105'>Teletaleem Server</option>
+        </select><button class='config navigation' >Update Server</button>
+      </div>
+      <div class='groupdiv'>
       <h1>Account</h1>
       <div class='label_value'>
         <label>Name</label>
@@ -78,6 +91,14 @@ class AccountView extends Backbone.View
         <input id='should' placeholder='should'>
         <button>Send</button>
       </div-->
+      </div>
       "
     @$el.html html
     @trigger "rendered"
+
+  config: ->
+    console.log "i am"
+    if $('.serverurl').val()? and  $('.serverurl').val() != ''
+      Tangerine.config.address.cloud.host = $('.serverurl').val()
+      Tangerine.$db.saveDoc Tangerine.config, success:(data) -> location.reload() 
+    

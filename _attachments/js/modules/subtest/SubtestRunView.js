@@ -38,7 +38,8 @@ SubtestRunView = (function(_super) {
     studentDialog = (this.model.get("studentDialog") || "") !== "" ? "<div class='student_dialog'>" + (this.model.get('studentDialog')) + "</div>" : "";
     skipButton = "<button class='skip navigation'>Skip</button>";
     skippable = this.model.get("skippable") === true || this.model.get("skippable") === "true";
-    this.$el.html("      <h2>" + (this.model.get('name')) + "</h2>      " + enumeratorHelp + "      " + studentDialog + "      <div id='prototype_wrapper'></div>      <div class='controlls'>        <button class='next navigation'>Next</button>" + (skippable ? skipButton : "") + "      </div>    ");
+    console.log(this.model.get("prototype"));
+    this.$el.html("    <div class='controlls'>        <button class='next navigation'>Next</button>" + (skippable ? skipButton : "") + "      </div>      <h2>" + (this.model.get('name')) + "</h2>      " + enumeratorHelp + "      " + studentDialog + "      <div id='prototype_wrapper'></div>      <div class='controlls'>        <button class='next navigation'>Next</button>" + (skippable ? skipButton : "") + "      </div>    ");
     this.prototypeView = new window[this.protoViews[this.model.get('prototype')]['run']]({
       model: this.model,
       parent: this
@@ -58,7 +59,12 @@ SubtestRunView = (function(_super) {
     this.prototypeView.setElement(this.$el.find('#prototype_wrapper'));
     this.prototypeView.render();
     this.prototypeRendered = true;
-    return this.trigger("rendered");
+    this.trigger("rendered");
+    if (this.model.get("prototype") === "datetime") {
+      return setTimeout(function() {
+        return $('.next').trigger("click");
+      }, 500);
+    }
   };
 
   SubtestRunView.prototype.showNext = function() {

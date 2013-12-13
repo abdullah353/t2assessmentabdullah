@@ -311,6 +311,9 @@ td {
 /* ==|== primary styles =====================================================
    Author:
    ========================================================================== */
+.space15 {
+  margin: 0px 15px;
+}
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.
    ========================================================================== */
@@ -663,7 +666,7 @@ div#enumerator_box div {
   display: block;
   clear: both;
   color: white;
-  background-color: #bcd63f;
+  background-color: #366d29;
   padding: 2px 5px;
   font-size: 20px !important;
   font-weight: normal;
@@ -1039,8 +1042,8 @@ button.navigation:hover {
 .command {
   display: inline-block;
   font-size: 20px;
-  color: black;
-  background-color: #e7e7e7;
+  color: white;
+  background-color: #bcd63f;
   border: 0 !important;
   margin: 10px 10px 5px 0px;
   padding: 7px 25px !important;
@@ -1053,13 +1056,13 @@ button.navigation:hover {
   background-color: #bcd63f;
 }
 .command:hover {
-  background-color: #f6ef9a;
+  background-color: #366d29;
 }
 .command_red {
   display: inline-block;
   font-size: 20px;
-  color: black;
-  background-color: #e7e7e7;
+  color: white;
+  background-color: #bcd63f;
   border: 0 !important;
   margin: 10px 10px 5px 0px;
   padding: 7px 25px !important;
@@ -1074,7 +1077,7 @@ button.navigation:hover {
   background-color: #bcd63f;
 }
 .command_red:hover {
-  background-color: #f6ef9a;
+  background-color: #366d29;
 }
 label {
   color: black;

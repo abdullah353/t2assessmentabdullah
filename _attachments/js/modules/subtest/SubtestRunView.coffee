@@ -19,9 +19,12 @@ class SubtestRunView extends Backbone.View
     studentDialog  = if (@model.get("studentDialog")  || "") != "" then "<div class='student_dialog'>#{@model.get 'studentDialog'}</div>" else ""
     skipButton = "<button class='skip navigation'>Skip</button>"
     skippable = @model.get("skippable") == true || @model.get("skippable") == "true"
-
+    console.log @model.get "prototype"
     @$el.html "
-      <h2>#{@model.get 'name'}</h2>
+    <div class='controlls'>
+        <button class='next navigation'>Next</button>#{if skippable then skipButton else "" }
+      </div>
+      <h2>#{@model.get('name')}</h2>
       #{enumeratorHelp}
       #{studentDialog}
       <div id='prototype_wrapper'></div>
@@ -41,8 +44,12 @@ class SubtestRunView extends Backbone.View
     @prototypeView.setElement(@$el.find('#prototype_wrapper'))
     @prototypeView.render()
     @prototypeRendered = true
-
     @trigger "rendered"
+    #$('.next').trigger("click") if @model.get("prototype") == "datetime"
+    if @model.get("prototype") == "datetime"
+      setTimeout () ->
+        $('.next').trigger "click" 
+      ,500
 
   showNext: => @$el.find(".controlls").show() 
   hideNext: => @$el.find(".controlls").hide()
