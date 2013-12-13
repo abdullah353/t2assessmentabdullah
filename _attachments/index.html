@@ -175,7 +175,39 @@
 
     <script>MBP.scaleFix();</script>
     <div id="result" style="display:none">clear</div>
+   <script type="text/javascript" charset="utf-8">
+function onBackKeyDown() {
+    // Handle the back button
+    alert("hhheello");
+}
+    // Wait for PhoneGap to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
 
+    // PhoneGap is ready
+    //
+    function onDeviceReady() {
+            document.addEventListener("backbutton", onBackKeyDown, false);
+            alert("working");
+    }
+
+    // alert dialog dismissed
+    function alertDismissed() {
+        // do something
+    }
+
+    // Show a custom alert
+    //
+    function showAlert() {
+        navigator.notification.alert(
+            'You are the winner!',  // message
+            alertDismissed,         // callback
+            'Game Over',            // title
+            'Done'                  // buttonName
+        );
+    }
+
+    </script>
 <script>
 $('#result').click(function(){
     localStorage.clear();
@@ -218,30 +250,25 @@ function onOnline() {
 }
 </script>
  <script type="text/javascript" charset="utf-8">
-var allResult = new Results();
-allResult.fetch();
-setTimeout(function(){storeResult()},2000);
-function storeResult() {
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-}
+allResult = '';
 
 function gotFS(fileSystem) {
-    fileSystem.root.getFile("results.json", {create: true, exclusive: false}, gotFileEntry, fail);
-    }
+   fileSystem.root.getDirectory("data", {create: true}, gotDir);
+}
 
-function gotFileEntry(fileEntry) {
-        fileEntry.createWriter(gotFileWriter, fail);
-    }
+function gotDir(dirEntry) {
+    var d = new Date();
+    var strDate = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + "-" + Math.floor((Math.random()*1000)+1);
+    dirEntry.getFile("result"+strDate+".json", {create: true, exclusive: false}, gotFile);
+}
+function gotFile(fileEntry){
+    fileEntry.createWriter(gotFileWriter);
+}
 
 function gotFileWriter(writer) {
-        writer.onwriteend = function(evt) {
-
-        };
-        writer.write(JSON.stringify(allResult));
-    }
-
-function fail(error) {
-    }
+    writer.onwriteend = function(evt) {};
+    writer.write(JSON.stringify(allResult));
+}
 
 </script>
 </body>

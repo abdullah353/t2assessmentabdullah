@@ -311,6 +311,9 @@ td {
 /* ==|== primary styles =====================================================
    Author:
    ========================================================================== */
+.space15 {
+  margin: 0px 15px;
+}
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.
    ========================================================================== */
@@ -412,7 +415,7 @@ body.flash {
 }
 table.disabled .grid_element,
 div.disabled .grid_element {
-  color: #cccccc !important;
+  color: #e7e7e7 !important;
 }
 div.grid,
 table.grid {
@@ -429,7 +432,7 @@ div.grid .grid_element,
 table.grid .grid_element {
   cursor: pointer;
   text-align: center;
-  background: #cccccc;
+  background: #e7e7e7;
   color: black;
   margin: 5px;
   padding: 10px;
@@ -487,7 +490,7 @@ button.time {
   font-size: 25px;
   margin: 0 15px 10px 6px;
   color: white;
-  background-color: #f49b00;
+  background-color: #bcd63f;
   border: 0 !important;
   border-radius: 10px !important;
   font-weight: normal;
@@ -503,7 +506,7 @@ div.timer {
   padding: 11px 0;
   margin: 0;
   font-size: 25px;
-  border: 2px #cccccc solid;
+  border: 2px #e7e7e7 solid;
   border-radius: 10px;
   color: black;
 }
@@ -543,8 +546,8 @@ progress {
   border-color: #8cc63f;
 }
 .result_view .not_saved {
-  border-color: #cccccc !important;
-  color: #cccccc;
+  border-color: #e7e7e7 !important;
+  color: #e7e7e7;
   font-weight: bold;
 }
 #footer {
@@ -558,7 +561,7 @@ progress {
   font-size: 20px;
   padding: 10px;
   display: inline-block;
-  border: 2px solid #cccccc;
+  border: 2px solid #e7e7e7;
   margin: 0px 0 10px;
 }
 .info_box_wide {
@@ -566,7 +569,7 @@ progress {
   font-size: 20px;
   padding: 10px;
   display: inline-block;
-  border: 2px solid #cccccc;
+  border: 2px solid #e7e7e7;
   margin: 0px 0 10px;
   width: 90%;
 }
@@ -578,7 +581,7 @@ progress {
   font-size: 20px;
   padding: 10px;
   display: inline-block;
-  border: 2px solid #cccccc;
+  border: 2px solid #e7e7e7;
   border-radius: 10px;
   margin: 10px 0;
 }
@@ -586,7 +589,7 @@ progress {
   font-size: 20px;
   padding: 10px;
   display: inline-block;
-  border: 2px solid #cccccc;
+  border: 2px solid #e7e7e7;
   border-radius: 10px;
   margin: 10px 0;
   width: 100%;
@@ -631,10 +634,12 @@ nav#submenu {
 }
 #logout_link {
   float: right;
-  margin: 0;
-  padding: 20px 10px 0 10px;
-  color: black;
+  margin: 17px 0px 0px 25px;
+  background: #366d29;
+  padding: 5px 10px;
+  color: white;
   cursor: pointer;
+  font-size: 16px;
 }
 .edit_icon,
 .run_icon,
@@ -653,7 +658,7 @@ div#enumerator_box {
   float: right;
   vertical-align: middle;
   display: inline-block;
-  color: #f26f10;
+  color: #366d29;
   background-color: none;
   font-size: 15px !important;
   font-weight: bold;
@@ -663,7 +668,7 @@ div#enumerator_box div {
   display: block;
   clear: both;
   color: white;
-  background-color: #f49b00;
+  background-color: #366d29;
   padding: 2px 5px;
   font-size: 20px !important;
   font-weight: normal;
@@ -785,13 +790,13 @@ li {
  * Placeholders
  */
 input::-webkit-input-placeholder {
-  color: #cccccc;
+  color: #e7e7e7;
 }
 input:-moz-placeholder {
-  color: #cccccc;
+  color: #e7e7e7;
 }
 input:-ms-input-placeholder {
-  color: #cccccc;
+  color: #e7e7e7;
 }
 /*
  * Edit Subtest
@@ -851,7 +856,7 @@ table.basic_info th {
   background: white;
   margin: 0 0 40px;
   padding: 5px 10px 15px;
-  border: 2px solid #cccccc;
+  border: 2px solid #e7e7e7;
 }
 .question {
   position: relative;
@@ -859,7 +864,7 @@ table.basic_info th {
   background: white;
   margin: 0 0 40px;
   padding: 5px 10px 15px;
-  border: 2px solid #cccccc;
+  border: 2px solid #e7e7e7;
 }
 .question input {
   display: inline;
@@ -937,7 +942,7 @@ table.basic_info th {
   vertical-align: middle;
 }
 .question_list_element {
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #e7e7e7;
   background: white;
 }
 .question_list_element td {
@@ -986,7 +991,7 @@ h3 {
 }
 .student_dialog {
   padding: 20px;
-  background-color: #cccccc;
+  background-color: #e7e7e7;
 }
 input {
   border: 1px solid #888;
@@ -1005,7 +1010,7 @@ textarea {
   width: 95%;
 }
 button[disabled] {
-  color: #cccccc !important;
+  color: #e7e7e7 !important;
   background: white !important;
 }
 .grey {
@@ -1021,7 +1026,7 @@ button.navigation {
   display: inline-block;
   font-size: 22px;
   color: white;
-  background-color: #f49b00;
+  background-color: #bcd63f;
   border: 0 !important;
   margin: 10px 10px 5px 0;
   padding: 7px 20px !important;
@@ -1034,13 +1039,13 @@ button.navigation:active {
   background-color: #bcd63f;
 }
 button.navigation:hover {
-  background-color: #f26f10;
+  background-color: #366d29;
 }
 .command {
   display: inline-block;
   font-size: 20px;
-  color: black;
-  background-color: #cccccc;
+  color: white;
+  background-color: #bcd63f;
   border: 0 !important;
   margin: 10px 10px 5px 0px;
   padding: 7px 25px !important;
@@ -1053,13 +1058,13 @@ button.navigation:hover {
   background-color: #bcd63f;
 }
 .command:hover {
-  background-color: #f6ef9a;
+  background-color: #366d29;
 }
 .command_red {
   display: inline-block;
   font-size: 20px;
-  color: black;
-  background-color: #cccccc;
+  color: white;
+  background-color: #bcd63f;
   border: 0 !important;
   margin: 10px 10px 5px 0px;
   padding: 7px 25px !important;
@@ -1074,7 +1079,7 @@ button.navigation:hover {
   background-color: #bcd63f;
 }
 .command_red:hover {
-  background-color: #f6ef9a;
+  background-color: #366d29;
 }
 label {
   color: black;
@@ -1128,7 +1133,7 @@ label[title] {
   width: 300px;
   font-size: 25px;
   color: white;
-  background-color: #f49b00;
+  background-color: #bcd63f;
   border: 0 !important;
   margin: 20px 0 0;
   padding: 7px !important;
@@ -1177,11 +1182,11 @@ table.mastery_check tr:nth-child(odd) {
 }
 ul.klass_list li {
   padding: 5px 0;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #e7e7e7;
 }
 .student_list_element {
   padding: 5px 0;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid #e7e7e7;
 }
 .subtest_taken {
   background: #8cc63f;
@@ -1428,7 +1433,7 @@ table.tablesorter thead tr .headerSortUp {
   color: #383838;
 }
 .ui-widget-header {
-  border: 1px solid #cccccc;
+  border: 1px solid #e7e7e7;
   background: #817865;
   color: #ffffff;
   font-weight: bold;
@@ -1441,8 +1446,7 @@ table.tablesorter thead tr .headerSortUp {
 .ui-state-default,
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
-  background: #cccccc;
-  color: #999999;
+  background: #e7e7e7;
 }
 .ui-state-default a,
 .ui-state-default a:link,
@@ -1474,7 +1478,7 @@ table.tablesorter thead tr .headerSortUp {
 .ui-state-active a,
 .ui-state-active a:link,
 .ui-state-active a:visited {
-  color: #f49b00;
+  color: #bcd63f;
   text-decoration: none;
 }
 .ui-widget :active {
@@ -1751,7 +1755,8 @@ input.ui-button {
 }
 .ui-buttonset .ui-button {
   margin-left: 0;
-  margin-right: -10px;
+  margin-right: 0px;
+  min-width: 60px;
 }
 /* workarounds */
 button.ui-button::-moz-focus-inner {
@@ -1771,7 +1776,7 @@ button.ui-button::-moz-focus-inner {
   height: 0.5em;
   text-align: left;
   overflow: hidden;
-  background-color: #cccccc;
+  background-color: #e7e7e7;
 }
 .ui-progressbar .ui-progressbar-value {
   margin: -1px;
@@ -1779,9 +1784,7 @@ button.ui-button::-moz-focus-inner {
   background-color: #bcd63f;
 }
 #samSearchBox {
-  float: right;
   width: 300px;
-  margin-top: -90px;
   margin-right: 40px;
 }
 .compAssessName {

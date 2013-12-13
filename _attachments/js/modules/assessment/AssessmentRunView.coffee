@@ -47,9 +47,11 @@ class AssessmentRunView extends Backbone.View
     else
       @$el.html "
         <h1>#{@model.get 'name'}</h1>
-        <div id='progress'></div>
+        <div id='progress' style='float:left;width:90%;margin-top:7px;'></div><div id='progressCount' style='float:right;color:#8cc63f;font-weight:bold;'></div><div class='clear' style='clear:both;'></div>
       "
-      @$el.find('#progress').progressbar value : ( ( @index + 1 ) / ( @model.subtests.length + 1 ) * 100 )
+
+      @$el.find('#progress').progressbar value : ( ( @index-1  ) / ( @model.subtests.length - 1  ) * 100 ) if @index+1 > 2
+      @$el.find('#progressCount').html  "#{@index-1}/#{@model.subtests.length - 1}" if @index+1 > 2
 
       currentView.on "rendered", => @trigger "rendered"
       currentView.on "subRendered", => @trigger "subRendered"

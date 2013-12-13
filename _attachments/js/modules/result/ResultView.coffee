@@ -35,6 +35,11 @@ class ResultView extends Backbone.View
       Utils.midAlert "Save error"
       @$el.find('.save_status').html "Results may not have saved"
 
+    window.allResult = new Results
+    allResult.fetch
+      success: ->
+        window.requestFileSystem LocalFileSystem.PERSISTENT, 0, gotFS
+
   initialize: ( options ) ->
 
     # Try to get GPS coordinates
