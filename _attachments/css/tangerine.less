@@ -205,7 +205,9 @@ td { vertical-align: top; }
    ========================================================================== */
 
 
-
+.space15{
+  margin: 0px 15px;
+}
 /* ==|== non-semantic helper classes ========================================
    Please define your styles before this section.
    ========================================================================== */
@@ -276,13 +278,13 @@ textarea[contenteditable] {-webkit-appearance: none;}
 @hside: 0;
 @hbottom: 5px;
 
-@orange-1: #F26F10;
-@orange-2: #F49B00;
+@orange-1: #366D29;
+@orange-2: #bcd63f;
 @orange-3: #BCD63F;
 @orange-4: #F6EF9A;
 @grey: #888;
 
-@grey-1: #CCC;
+@grey-1: #E7E7E7;
 @grey-2: #999;
 @grey-3: #333;
 
@@ -601,10 +603,12 @@ nav#submenu
 #logout_link
 {
   float: right;
-  margin: 0;
-  padding: 20px 10px 0 10px;
-  color: black;
-  cursor: pointer;
+margin: 17px 0px 0px 25px;
+background: @orange-1;
+padding: 5px 10px;
+color: white;
+cursor: pointer;
+font-size: 16px;
 }
 
 .edit_icon,
@@ -641,7 +645,7 @@ div#enumerator_box
     display: block;
     clear: both;
     color: white;
-    background-color: @orange-2;
+    background-color: @orange-1;
     padding:2px 5px;
     font-size: 20px !important;
     font-weight: normal;
@@ -1208,8 +1212,8 @@ button.navigation
 {
   display:inline-block;
   font-size: @h2;
-  color: black;
-  background-color: @grey-1;
+  color: white;
+  background-color: @orange-2;
   border: 0 !important;
   margin: 10px 10px 5px 0px;
   padding: 7px 25px !important;
@@ -1222,7 +1226,7 @@ button.navigation
   
   &:hover
   {
-    background-color: @orange-4;
+    background-color: @orange-1;
   }
 }
 
@@ -1556,7 +1560,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 
 /* Interaction states
 ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { background: @grey-1; color: @grey-2; }
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { background: @grey-1; }
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: @orange-4; text-decoration: none; }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover { color: @grey-3; }
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { color: @grey-3; }
@@ -1644,7 +1648,7 @@ input.ui-button { padding: .4em 1em; }
 
 /*button sets*/
 .ui-buttonset { margin-right: 7px; }
-.ui-buttonset .ui-button { margin-left: 0; margin-right: -10px; }
+.ui-buttonset .ui-button { margin-left: 0; margin-right: 0px; min-width:60px;}
 
 /* workarounds */
 button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
@@ -1660,5 +1664,5 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-progressbar { height:0.5em; text-align: left; overflow: hidden; background-color: @grey-1; }
 .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; background-color: @orange-3}
 
-#samSearchBox{float: right;width: 300px;margin-top: -90px;margin-right: 40px;}
+#samSearchBox{width: 300px;margin-right: 40px;}
 .compAssessName {color:red;}

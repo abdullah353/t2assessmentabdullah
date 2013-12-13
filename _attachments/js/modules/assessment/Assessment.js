@@ -50,7 +50,7 @@ Assessment = (function(_super) {
     }
     this.trigger("status", "import lookup");
     dKeys = JSON.stringify(dKey.replace(/[^a-f0-9]/g, " ").split(/\s+/));
-    $.ajax("http://tangerine.iriscouch.com/tangerine/_design/tangerine/_view/byDKey", {
+    $.ajax("" + Tangerine.config.address.cloud.host + ":" + Tangerine.config.address.port + "/" + Tangerine.db_name + "/_design/" + Tangerine.design_doc + "/_view/byDKey", {
       type: "POST",
       dataType: "jsonp",
       data: {

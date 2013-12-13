@@ -16,7 +16,7 @@ class LocationRunView extends Backbone.View
     @samAssessmentId = options.parent.model.attributes.assessmentId
     @resultarray = new Results
     @resultarray.fetch
-      "_id" : @samAssessmentId
+      "key" : @samAssessmentId
       success: (gotresult) =>
         _.each gotresult.models , (result3) =>
           if _.last(result3.attributes.subtestData)?.data.end_time? 
@@ -73,12 +73,15 @@ class LocationRunView extends Backbone.View
   clearInputs: ->
     @clearMessage()
     @clearButton()
+    $('#samSearchBox').val('')
+    $('.tohide').hide()
     for level, i in @levels
       @$el.find("#level_#{i}").val("")
 
   autofill: (event) ->
     @clearMessage()
     @clearButton()
+    $('.tohide').show()
     @$el.find(".autofill").fadeOut(250)
     index = $(event.target).attr("data-index")
     location = @locations[index]
@@ -100,9 +103,10 @@ class LocationRunView extends Backbone.View
       atLeastOne = false
       results = []
       for stack, i in @haystack
-        isThere = ~@haystack[i][field].indexOf(needle)
-        results.push i if isThere
-        atLeastOne = true if isThere
+        isThere = @haystack[i][field].search new RegExp('^'+needle, "i")
+        if isThere == 0
+          results.push i 
+          atLeastOne = true
       
       for stack, i in @haystack
         for otherField, j in stack
@@ -127,13 +131,15 @@ class LocationRunView extends Backbone.View
     for location, j in @locations[i]
       templateInfo["level_" + j] = location
       abc = @li templateInfo
-      
+      k = off
       _.each @penNam, (pendingname , i) =>
         #important to keep type of same to comparison
         a = []
         a.push location
         abc = abc.replace "<li class='cont'","<li class='lipend' style='color:red;' data-key='#{@penkeys[i]}' " if _.isEqual a, pendingname
-        
+        k = on if _.isEqual a, pendingname
+      abc = abc.replace "</li>"," (Incomplete) </li>" if k == on
+      k = off
       _.each @compNam, (completename) ->
         #important to keep type of same to comparison
         a = []
@@ -143,18 +149,19 @@ class LocationRunView extends Backbone.View
 
   render: ->
     schoolListElements = ""
+    
+    for level, i in @levels
+    	html = "<input class='search' val='' data-level='#{i}' id='samSearchBox' placeholder='Search For Student Name'>"
 
-    html = "
+    html += "
       <button class='clear command'>Clear</button>
       ";
 
     for level, i in @levels
       html += "
-        <div class='label_value'>
-          <label for='level_#{i}'>#{level}</label><br>
-          <input class='search' val='' data-level='#{i}' id='samSearchBox' placeholder='Search For Student Name'>
+        <div class='label_value tohide' style='display:none'>
           <label>Selected Student Name: </label>
-          <input class='name-field' data-level='#{i}' id='level_#{i}' value='' disabled>
+          <input class='name-field' data-level='#{i}' id='level_#{i}' value='' disabled style='background:white;border:0px;width: 70%;color:#476F00 !important;font-weight: bold;'>
         </div>
         <div id='autofill_#{i}' class='autofill' style='display:none'>
           <h2>Select one from autofill list</h2>
