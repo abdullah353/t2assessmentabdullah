@@ -634,10 +634,12 @@ nav#submenu {
 }
 #logout_link {
   float: right;
-  margin: 0;
-  padding: 20px 10px 0 10px;
-  color: black;
+  margin: 17px 0px 0px 25px;
+  background: #366d29;
+  padding: 5px 10px;
+  color: white;
   cursor: pointer;
+  font-size: 16px;
 }
 .edit_icon,
 .run_icon,

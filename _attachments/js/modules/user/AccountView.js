@@ -77,7 +77,7 @@ AccountView = (function(_super) {
   AccountView.prototype.render = function() {
     var classChecked, group, html, mobileChecked, _i, _len, _ref1;
     this.config = "";
-    html = "      <button class='back navigation'>Back</button>      <div style='display:" + this.visible + "'>        <h1>Server Configuration</h1>        <p><strong>Current Server is : " + Tangerine.config.address.cloud.host + "</strong> </p>        <select class='serverurl space15'>          <option value='http://tangerine.iriscouch.com'>Tangerine Server</option>          <option value='http://192.168.2.105'>Teletaleem Server</option>        </select><button class='config navigation' >Update Server</button>      </div>      <div class='groupdiv'>      <h1>Account</h1>      <div class='label_value'>        <label>Name</label>        <p>" + this.user.name + "</p>      </div>      <div class='label_value menu_box'>        <label>Groups</label>        <ul>    ";
+    html = "      <button class='back navigation'>Back</button>      <div style='display:" + this.visible + "'>        <h1>Server Configuration</h1>        <p><strong>Current Server is : " + Tangerine.config.address.cloud.host + "</strong> </p>        <select class='serverurl space15'>          <option value='http://tangerine.iriscouch.com'>Tangerine Server</option>          <option value='http://m.teletaaleem.com'>Teletaleem Server</option>        </select><button class='config navigation' >Update Server</button>      </div>      <div class='groupdiv'>      <h1>Account</h1>      <div class='label_value'>        <label>Name</label>        <p>" + this.user.name + "</p>      </div>      <div class='label_value menu_box'>        <label>Groups</label>        <ul>    ";
     _ref1 = this.user.get("groups") || [];
     for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
       group = _ref1[_i];
@@ -91,12 +91,12 @@ AccountView = (function(_super) {
   };
 
   AccountView.prototype.config = function() {
-    console.log("i am");
+    var _this = this;
     if (($('.serverurl').val() != null) && $('.serverurl').val() !== '') {
       Tangerine.config.address.cloud.host = $('.serverurl').val();
       return Tangerine.$db.saveDoc(Tangerine.config, {
         success: function(data) {
-          return location.reload();
+          return _this.render();
         }
       });
     }

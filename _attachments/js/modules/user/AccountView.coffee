@@ -51,7 +51,7 @@ class AccountView extends Backbone.View
         <p><strong>Current Server is : #{Tangerine.config.address.cloud.host}</strong> </p>
         <select class='serverurl space15'>
           <option value='http://tangerine.iriscouch.com'>Tangerine Server</option>
-          <option value='http://192.168.2.105'>Teletaleem Server</option>
+          <option value='http://m.teletaaleem.com'>Teletaleem Server</option>
         </select><button class='config navigation' >Update Server</button>
       </div>
       <div class='groupdiv'>
@@ -97,8 +97,7 @@ class AccountView extends Backbone.View
     @trigger "rendered"
 
   config: ->
-    console.log "i am"
     if $('.serverurl').val()? and  $('.serverurl').val() != ''
       Tangerine.config.address.cloud.host = $('.serverurl').val()
-      Tangerine.$db.saveDoc Tangerine.config, success:(data) -> location.reload() 
-    
+      Tangerine.$db.saveDoc Tangerine.config, success:(data) =>
+        @render()
