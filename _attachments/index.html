@@ -20,10 +20,6 @@
   <body>
     <div id='navigation' class="clearfix"></div>
     <div id='content'></div>
-    <div id="graph" style="display:none;">
-        <button class="navigation bb">Back</button>
-        <div id="chartContainer" style="width: 100%;min-height:650px"></div>
-    </div>
     <div id='footer'></div>
 
     <script src="js/lib/phonegap.js"></script>
@@ -39,102 +35,8 @@
     <script src="js/h5utils.js"></script>
 
     <script>MBP.scaleFix();</script>
-    <div id="result" style="display:none">clear</div>
 <script type="text/javascript" charset="utf-8">
-// Wait for PhoneGap to load
-//
 document.addEventListener("deviceready", onDeviceReady, false);
-
-// PhoneGap is ready
-//
-function onDeviceReady() {
-
-}
-
-// alert dialog dismissed
-function alertDismissed() {
-    // do something
-}
-
-// Show a custom alert
-//
-function showAlert() {
-    navigator.notification.alert(
-        'You are the winner!', // message
-        alertDismissed, // callback
-        'Game Over', // title
-        'Done' // buttonName
-    );
-}
-</script>
-<script>
-$('#result').click(function () {
-    localStorage.clear();
-});
-(function () {
-    $(document).ajaxStop(function () {
-        $('button.next').click(function () {
-
-            if (typeof (Storage) !== "undefined") {
-                var a = $('#level_0').val();
-                if (a) {
-                    localStorage[$(location).attr('hash')] += a + '|';
-                }
-                $("#result").html("Last name: " + localStorage[$(location).attr('hash')]);
-            } else {
-                $("#result").html("Sorry, your browser does not support web storage...");
-            }
-
-        });
-
-    });
-})();
-</script>
-<script type="text/javascript">
-    document.addEventListener("online", onOnline, false);
-
-    function onOnline() {
-        $.couch.replicate(Tangerine.config.address.local.dbName, Tangerine.config.address.cloud.host + "/" + Tangerine.config.address.cloud.dbName, {
-            success: function () {
-                return true;
-            },
-            error: function (a, b) {
-                return false;
-            }
-        });
-    }
-</script>
- <script type="text/javascript" charset="utf-8">
-allResult = '';
-
-function gotFS(fileSystem) {
-    fileSystem.root.getDirectory("data", {
-        create: true
-    }, gotDir);
-}
-
-function gotDir(dirEntry) {
-    var d = new Date();
-    var strDate = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + "-" + Math.floor((Math.random() * 1000) + 1);
-    dirEntry.getFile("result" + strDate + ".json", {
-        create: true,
-        exclusive: false
-    }, gotFile);
-}
-
-function gotFile(fileEntry) {
-    fileEntry.createWriter(gotFileWriter);
-}
-
-function gotFileWriter(writer) {
-    writer.onwriteend = function (evt) {};
-    writer.write(JSON.stringify(allResult));
-}
-$('button.bb').click(function () {
-    $('#graph').slideUp();
-    $('#content').slideDown();
-    Tangerine.router.navigate("", true);
-});
 </script>
 
 
