@@ -527,6 +527,8 @@ progress {
   padding: 10px 0;
 }
 .disposable_alert {
+  top: 20%;
+left: 30%;
   text-align: center;
   background: #f6ef9a;
   color: black;
