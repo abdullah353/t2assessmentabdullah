@@ -40,11 +40,14 @@
         imageFont:null
   },
     extensions: ["tex2jax.js"],
+    showProcessingMessages: false,
+    messageStyle: "none",
+    skipStartupTypeset: true,
     jax: ["input/TeX","output/HTML-CSS"],
     tex2jax: {inlineMath: [["$","$"],["$$","$$"]]}
   });
 </script>
-<script type="text/javascript" src="js/MathJax.js"></script>
+<script type="text/javascript" src="js/MathJax.js?config=TeX-AMS_HTML"></script>
 
     <script>MBP.scaleFix();</script>
 <script type="text/javascript" charset="utf-8">
