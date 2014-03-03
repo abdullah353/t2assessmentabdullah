@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html> 
 	<head> 
     <title>Tangerine</title> 
@@ -22,7 +22,7 @@
     <div id='content'></div>
     <div id='footer'></div>
 
-    <script src="js/lib/phonegap.js"></script>
+    <script src="js/lib/phonegap-1.3.0.js"></script>
     <script src="js/allib.js"></script>
     <script src="js/lib/handlebars.js"></script>
     <script src="js/lib/json2form.js"></script>
@@ -33,6 +33,21 @@
 
     <script src="js/modules.js"></script>
     <script src="js/h5utils.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+         preferredFont: "TeX",
+        imageFont:null
+  },
+    extensions: ["tex2jax.js"],
+    showProcessingMessages: false,
+    messageStyle: "none",
+    skipStartupTypeset: true,
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["$$","$$"]]}
+  });
+</script>
+<script type="text/javascript" src="js/MathJax.js?config=TeX-AMS_HTML"></script>
 
     <script>MBP.scaleFix();</script>
 <script type="text/javascript" charset="utf-8">
